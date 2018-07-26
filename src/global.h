@@ -27,6 +27,15 @@ typedef struct coord {
 } coord;
 
 /*
+ * structure to represent creatures
+ */
+typedef struct creature
+{
+    coord c_pos;
+} creature;
+
+
+/*
  * structure to hold the map grid
  */
 typedef struct MapGrid
