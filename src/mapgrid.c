@@ -41,6 +41,7 @@ MapGrid* mkMapGrid(char filename[]) {
 
 /*
  * clears the screen then prints the map onto the standard window
+ * TODO: move player info to seperate grid
  */
 void printMapGrid(MapGrid* map) {
    for(int y = 0; y < map->height; y++) {
