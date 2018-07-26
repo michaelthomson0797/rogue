@@ -3,15 +3,15 @@
 #include <ncurses.h>
 #include "tiles.c"
 
-struct Map
+struct MapGrid
 {
     int height;
     int width;
     struct Tile*** grid;
 };
 
-struct Map* mkMap(char filename[]) {
-    struct Map* map = (struct Map*) malloc(sizeof(struct Map));
+struct MapGrid* mkMapGrid(char filename[]) {
+    struct MapGrid* map = (struct MapGrid*) malloc(sizeof(struct MapGrid));
 
     map->height = 25;
     map->width = 50;
@@ -46,7 +46,7 @@ struct Map* mkMap(char filename[]) {
     return map;
 }
 
-char** getMapString(struct Map* map){
+char** getMapGridString(struct MapGrid* map){
     char** string = (char**) malloc(map->width * sizeof(char*));
 
     for(int x = 0; x < map->width; x++) {
@@ -63,8 +63,8 @@ char** getMapString(struct Map* map){
     return string;
 }
 
-void printMap(struct Map* map) {
-   char** mapstring = getMapString(map);
+void printMapGrid(struct MapGrid* map) {
+   char** mapstring = getMapGridString(map);
 
    for(int y = 0; y < map->height; y++) {
        for(int x = 0; x < map->width; x++) {

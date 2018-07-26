@@ -1,12 +1,12 @@
-#include "map.c"
+#include "mapgrid.c"
 #include <ncurses.h>
 #include <stdio.h>
 #include <stdlib.h>
 
 int main() {
     char filename[] = "test";
-    struct Map* map = mkMap(filename);
-    //printMap(map);
+    struct MapGrid* map = mkMapGrid(filename);
+    //printMapGrid(map);
 
     initscr();
     cbreak();
@@ -17,7 +17,7 @@ int main() {
     int playerx = 1;
     int playery = 1;
     map->grid[playerx][playery]->playerPresent=1;
-    printMap(map);
+    printMapGrid(map);
     refresh();
 
     int ch;
@@ -42,7 +42,7 @@ int main() {
                 map->grid[playerx][++playery]->playerPresent=1;
                 break;
         }
-        printMap(map);
+        printMapGrid(map);
         refresh();
     }
 
