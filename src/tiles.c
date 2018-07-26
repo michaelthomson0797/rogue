@@ -2,7 +2,7 @@
 
 Tile* mkFloor(int x, int y) {
     Tile* tile = (Tile*) malloc(sizeof(Tile));
-    tile->type = '.';
+    tile->type = FLOOR;
     tile->t_pos.x = x;
     tile->t_pos.y = y;
     tile->passable = 1;
@@ -12,7 +12,7 @@ Tile* mkFloor(int x, int y) {
 
 Tile* mkWall(int x, int y) {
     Tile* tile = (Tile*) malloc(sizeof(Tile));
-    tile->type = '#';
+    tile->type = WALL;
     tile->t_pos.x = x;
     tile->t_pos.y = y;
     tile->passable = 0;
@@ -22,7 +22,7 @@ Tile* mkWall(int x, int y) {
 
 Tile* mkEmpty(int x, int y) {
     Tile* tile = (Tile*) malloc(sizeof(Tile));
-    tile->type = ' ';
+    tile->type = EMPTY;
     tile->t_pos.x = x;
     tile->t_pos.y = y;
     tile->passable = 0;
