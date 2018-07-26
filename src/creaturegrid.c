@@ -24,4 +24,16 @@ CreatureGrid* mkCreatureGrid() {
     return creaturegrid;
 }
 
-
+/*
+ * prints the creature grid layer to the standard window
+ */
+void printCreatureGrid(CreatureGrid* creaturegrid) {
+    for(int y = 0; y < HEIGHT; y++) {
+        for(int x = 0; x < WIDTH; x++) {
+            if(creaturegrid->grid[x][y] != NULL) {
+                mvdelch(y,x);
+                mvaddch(y, x, creaturegrid->grid[x][y]->type);
+            }
+        }
+    }
+}
