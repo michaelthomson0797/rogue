@@ -36,11 +36,11 @@ typedef struct coord {
 /*
  * structure to represent creatures
  */
-typedef struct creature
+typedef struct Creature
 {
     char type;
     coord c_pos;
-} creature;
+} Creature;
 
 
 /*
@@ -50,7 +50,7 @@ typedef struct CreatureGrid
 {
     int height;
     int width;
-    creature*** grid;
+    Creature*** grid;
 } CreatureGrid;
 
 /*
