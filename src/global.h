@@ -88,3 +88,5 @@ Tile* mkEmpty(int x, int y);
 
 CreatureGrid* mkCreatureGrid();
 void printCreatureGrid(CreatureGrid* creaturegrid);
+
+Creature* mkCreature(char type, int x, int y);
