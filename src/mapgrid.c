@@ -12,7 +12,7 @@ MapGrid* mkMapGrid(char filename[]) {
 
     map->grid = (Tile***) malloc(map->width * sizeof(Tile**));
 
-    for(int i = 0; i < map->width+1; i++) {
+    for(int i = 0; i < map->width; i++) {
         map->grid[i] = (Tile**) malloc(map->height * sizeof(Tile*));
     }
 
