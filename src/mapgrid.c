@@ -1,26 +1,16 @@
-#include <stdio.h>
-#include <stdlib.h>
-#include <ncurses.h>
-#include "tiles.c"
+#include "global.h"
 
-struct MapGrid
-{
-    int height;
-    int width;
-    struct Tile*** grid;
-};
-
-struct MapGrid* mkMapGrid(char filename[]) {
-    struct MapGrid* map = (struct MapGrid*) malloc(sizeof(struct MapGrid));
+MapGrid* mkMapGrid(char filename[]) {
+    MapGrid* map = (MapGrid*) malloc(sizeof(MapGrid));
 
     map->height = 25;
     map->width = 50;
 
 
-    map->grid = (struct Tile***) malloc(map->width * sizeof(struct Tile**));
+    map->grid = (Tile***) malloc(map->width * sizeof(Tile**));
 
     for(int i = 0; i < map->width+1; i++) {
-        map->grid[i] = (struct Tile**) malloc(map->height * sizeof(struct Tile*));
+        map->grid[i] = (Tile**) malloc(map->height * sizeof(Tile*));
     }
 
     FILE* file = fopen(filename, "r");
@@ -46,7 +36,7 @@ struct MapGrid* mkMapGrid(char filename[]) {
     return map;
 }
 
-char** getMapGridString(struct MapGrid* map){
+char** getMapGridString(MapGrid* map){
     char** string = (char**) malloc(map->width * sizeof(char*));
 
     for(int x = 0; x < map->width; x++) {
@@ -55,7 +45,7 @@ char** getMapGridString(struct MapGrid* map){
             if(map->grid[x][y]->playerPresent) {
                 string[x][y] = '@';
             } else {
-                string[x][y] = map->grid[x][y]->str;
+                string[x][y] = map->grid[x][y]->type;
             }
         }
     }
@@ -63,7 +53,7 @@ char** getMapGridString(struct MapGrid* map){
     return string;
 }
 
-void printMapGrid(struct MapGrid* map) {
+void printMapGrid(MapGrid* map) {
    char** mapstring = getMapGridString(map);
 
    for(int y = 0; y < map->height; y++) {

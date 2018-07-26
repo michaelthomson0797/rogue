@@ -1,11 +1,8 @@
-#include "mapgrid.c"
-#include <ncurses.h>
-#include <stdio.h>
-#include <stdlib.h>
+#include "global.h"
 
 int main() {
     char filename[] = "test";
-    struct MapGrid* map = mkMapGrid(filename);
+    MapGrid* map = mkMapGrid(filename);
     //printMapGrid(map);
 
     initscr();
