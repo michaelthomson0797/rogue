@@ -31,7 +31,7 @@ void printCreatureGrid(CreatureGrid* creaturegrid) {
     for(int y = 0; y < HEIGHT; y++) {
         for(int x = 0; x < WIDTH; x++) {
             if(creaturegrid->grid[x][y] != NULL) {
-                mvdelch(y,x);
+                //mvdelch(y,x);
                 mvaddch(y, x, creaturegrid->grid[x][y]->type);
             }
         }
