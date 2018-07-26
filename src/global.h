@@ -85,3 +85,6 @@ void printMapGrid(MapGrid* map);
 Tile* mkFloor(int x, int y);
 Tile* mkWall(int x, int y);
 Tile* mkEmpty(int x, int y);
+
+CreatureGrid* mkCreatureGrid();
+void printCreatureGrid(CreatureGrid* creaturegrid);
