@@ -1,10 +1,13 @@
 #include "global.h"
 
+/*
+ * Creates a MapGrid pointer from a level text file
+ */
 MapGrid* mkMapGrid(char filename[]) {
     MapGrid* map = (MapGrid*) malloc(sizeof(MapGrid));
 
-    map->height = 25;
-    map->width = 50;
+    map->height = HEIGHT;
+    map->width = WIDTH;
 
 
     map->grid = (Tile***) malloc(map->width * sizeof(Tile**));
@@ -36,30 +39,18 @@ MapGrid* mkMapGrid(char filename[]) {
     return map;
 }
 
-char** getMapGridString(MapGrid* map){
-    char** string = (char**) malloc(map->width * sizeof(char*));
-
-    for(int x = 0; x < map->width; x++) {
-        string[x] = (char*) malloc(map->height * sizeof(char));
-        for(int y = 0; y < map->height; y++) {
-            if(map->grid[x][y]->playerPresent) {
-                string[x][y] = '@';
-            } else {
-                string[x][y] = map->grid[x][y]->type;
-            }
-        }
-    }
-
-    return string;
-}
-
+/*
+ * clears the screen then prints the map onto the standard window
+ */
 void printMapGrid(MapGrid* map) {
-   char** mapstring = getMapGridString(map);
-
    for(int y = 0; y < map->height; y++) {
        for(int x = 0; x < map->width; x++) {
            mvdelch(y, x);
-           mvaddch(y, x, mapstring[x][y]);
+           if(map->grid[x][y]->playerPresent) {
+                mvaddch(y, x, '@');
+           } else {
+                mvaddch(y, x, map->grid[x][y]->type);
+           }
        }
    }
 }
