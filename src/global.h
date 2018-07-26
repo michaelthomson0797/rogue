@@ -14,8 +14,15 @@
  * displayable items
  */
 #define FLOOR   '.'
-#define WALL    '#';
-#define DOOR    '+';
+#define WALL    '#'
+#define DOOR    '+'
+#define EMPTY   ' '
+
+/*
+ * grid parameters
+ */
+#define WIDTH   50
+#define HEIGHT  25
 
 
 /*
@@ -31,20 +38,24 @@ typedef struct coord {
  */
 typedef struct creature
 {
+    char type;
     coord c_pos;
 } creature;
 
 
 /*
- * structure to hold the map grid
+ * structure for the grid of creatures
  */
-typedef struct MapGrid
+typedef struct CreatureGrid
 {
     int height;
     int width;
-    struct Tile*** grid;
-} MapGrid;
+    creature*** grid;
+} CreatureGrid;
 
+/*
+ * structure for tiles on the mapgrid
+ */
 typedef struct Tile
 {
     char type;
@@ -53,13 +64,22 @@ typedef struct Tile
     int playerPresent;
 } Tile;
 
+/*
+ * structure to hold the map grid
+ */
+typedef struct MapGrid
+{
+    int height;
+    int width;
+    Tile*** grid;
+} MapGrid;
+
 
 
 /*
  * functions
  */
 MapGrid* mkMapGrid(char filename[]);
-char** getMapGridString(MapGrid* map);
 void printMapGrid(MapGrid* map);
 
 Tile* mkFloor(int x, int y);
