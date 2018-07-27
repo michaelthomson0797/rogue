@@ -1,2 +1,2 @@
-main:
-	gcc -o main main.c tiles.c mapgrid.c creaturegrid.c creature.c -lncurses
+all:
+	gcc -o main main.c tiles.c mapgrid.c creaturegrid.c creature.c room.c -lncurses

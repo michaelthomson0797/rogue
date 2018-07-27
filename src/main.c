@@ -5,7 +5,7 @@ int main() {
     MapGrid* map = mkMapGrid(filename);
     CreatureGrid* creaturegrid = mkCreatureGrid();
 
-    Creature* player = mkCreature('@', 1, 1);
+    Creature* player = map->player;
     creaturegrid->grid[player->c_pos.x][player->c_pos.y] = player;
 
     initscr();

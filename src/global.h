@@ -8,6 +8,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <ncurses.h>
+#include <time.h>
 
 
 /*
@@ -21,8 +22,11 @@
 /*
  * grid parameters
  */
-#define WIDTH   50
-#define HEIGHT  25
+#define WIDTH           200
+#define HEIGHT          200
+#define MAX_ROOMS       100
+#define MIN_ROOM_SIZE   5
+#define MAX_ROOM_SIZE   12
 
 
 /*
@@ -65,15 +69,28 @@ typedef struct Tile
 } Tile;
 
 /*
+ * structure to hold a room's info
+ */
+typedef struct Room
+{
+    coord r_pos1;
+    coord r_pos2;
+    int height;
+    int width;
+    coord center;
+} Room;
+
+/*
  * structure to hold the map grid
  */
 typedef struct MapGrid
 {
     int height;
     int width;
+    Creature* player;
     Tile*** grid;
+    Room** rooms;
 } MapGrid;
-
 
 
 /*
@@ -81,6 +98,11 @@ typedef struct MapGrid
  */
 MapGrid* mkMapGrid(char filename[]);
 void printMapGrid(MapGrid* map);
+
+Room*  mkRoom(int x, int y, int h, int w);
+void addRoom(Room* room, MapGrid* mapgrid);
+int intersect(Room* room1, Room* room2);
+coord center(Room* room);
 
 Tile* mkFloor(int x, int y);
 Tile* mkWall(int x, int y);

@@ -8,40 +8,52 @@ MapGrid* mkMapGrid(char filename[]) {
 
     map->height = HEIGHT;
     map->width = WIDTH;
-
-
+    map->rooms = (Room**) malloc(MAX_ROOMS * sizeof(Room*));
     map->grid = (Tile***) malloc(map->width * sizeof(Tile**));
 
     for(int i = 0; i < map->width; i++) {
         map->grid[i] = (Tile**) malloc(map->height * sizeof(Tile*));
     }
 
-    FILE* file = fopen(filename, "r");
-    for(int y = 0; y < map->height; y++) {
-        for(int x = 0; x <= map->width; x++) {
-            char ch = getc(file);
+   for(int y = 0; y < map->height; y++) {
+       for(int x = 0; x < map->width; x++) {
+           map->grid[x][y] = mkEmpty(x, y);
+       }
+   }
 
-            if(ch == '\n') continue;
+   srand(time(NULL));
+    int num_rooms = 0;
 
-            switch(ch) {
-                case '.':
-                    map->grid[x][y] = mkFloor(x, y);
-                    break;
-                case '#':
-                    map->grid[x][y] = mkWall(x, y);
-                    break;
-                default:
-                    map->grid[x][y] = mkEmpty(x, y);
-                    break;
+    for(int i = 0; i < MAX_ROOMS; i++) {
+        int w = rand() % MAX_ROOM_SIZE + MIN_ROOM_SIZE;
+        int h = rand() % MAX_ROOM_SIZE + MIN_ROOM_SIZE;
+
+        int x = rand() % (WIDTH - w - 1);
+        int y = rand() % (HEIGHT - h - 1);
+
+        Room* new_room = mkRoom(x, y, h, w);
+
+        int intersects = 0;
+        for(int j = 0; j < num_rooms; j++) {
+            if(intersect(new_room, map->rooms[j])) {
+                intersects = 1;
             }
         }
+        
+        if(intersects == 0) {
+            map->rooms[num_rooms++] = new_room;
+            addRoom(new_room, map);
+        }
     }
+
+    map->player = mkCreature('@', map->rooms[0]->center.x, map->rooms[0]->center.y);
+
     return map;
+
 }
 
 /*
  * clears the screen then prints the map onto the standard window
- * TODO: move player info to seperate grid
  */
 void printMapGrid(MapGrid* map) {
    for(int y = 0; y < map->height; y++) {
