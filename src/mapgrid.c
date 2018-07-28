@@ -40,11 +40,31 @@ MapGrid* mkMapGrid(char filename[]) {
             }
         }
         
+        printf("%d", num_rooms);
+        
         if(intersects == 0) {
             map->rooms[num_rooms++] = new_room;
             addRoom(new_room, map);
         }
     }
+
+    for(int i = 1; i < num_rooms; i++) {
+        int VorH = rand() % 1;
+
+        int x1 = map->rooms[i-1]->center.x;
+        int y1 = map->rooms[i-1]->center.y;
+        int x2 = map->rooms[i]->center.x;
+        int y2 = map->rooms[i]->center.y;
+
+        if(VorH) {
+            addTunnelH(map, x1, x2, y1);
+            addTunnelV(map, y1, y2, x2);
+        } else {
+            addTunnelV(map, y1, y2, x1);
+            addTunnelH(map, x1, x2, y2);
+        }
+    }
+
 
     map->player = mkCreature('@', map->rooms[0]->center.x, map->rooms[0]->center.y);
 

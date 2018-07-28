@@ -10,6 +10,8 @@
 #include <ncurses.h>
 #include <time.h>
 
+#define max(x,y) ((x) >= (y)) ? (x) : (y)
+#define min(x,y) ((x) <= (y)) ? (x) : (y)
 
 /*
  * displayable items
@@ -22,9 +24,9 @@
 /*
  * grid parameters
  */
-#define WIDTH           200
-#define HEIGHT          200
-#define MAX_ROOMS       100
+#define WIDTH           80
+#define HEIGHT          50
+#define MAX_ROOMS       10
 #define MIN_ROOM_SIZE   5
 #define MAX_ROOM_SIZE   12
 
@@ -101,6 +103,8 @@ void printMapGrid(MapGrid* map);
 
 Room*  mkRoom(int x, int y, int h, int w);
 void addRoom(Room* room, MapGrid* mapgrid);
+void addTunnelH(MapGrid* mapgrid, int x1, int x2, int y);
+void addTunnelV(MapGrid* mapgrid, int y1, int y2, int x);
 int intersect(Room* room1, Room* room2);
 coord center(Room* room);
 

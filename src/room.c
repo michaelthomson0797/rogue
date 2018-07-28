@@ -25,6 +25,26 @@ void addRoom(Room* room, MapGrid* mapgrid) {
     }   
 }
 
+void addTunnelH(MapGrid* mapgrid, int x1, int x2, int y) {
+    int xmax = max(x1, x2);
+    int xmin = min(x1, x2);
+    for(int x = xmin; x <= xmax; x++) {
+        mapgrid->grid[x][y] = mkFloor(x, y);
+        //mapgrid->grid[x][y+1] = mkWall(x, y+1);
+        //mapgrid->grid[x][y-1] = mkWall(x, y-1);
+    }
+}
+
+void addTunnelV(MapGrid* mapgrid,int y1, int y2, int x) {
+    int ymax = max(y1, y2);
+    int ymin = min(y1, y2);
+    for(int y = ymin; y <= ymax; y++) {
+        mapgrid->grid[x][y] = mkFloor(x, y);
+        //mapgrid->grid[x+1][y] = mkWall(x+1, y);
+        //mapgrid->grid[x-1][y] = mkWall(x-1, y);
+    }
+}
+
 coord center(Room* room) {
     coord Coord;
     
