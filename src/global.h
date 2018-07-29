@@ -80,7 +80,7 @@ typedef struct Cell
     coord c_pos;
     Tile* tile;
     Creature* creature;
-}
+} Cell;
 
 /*
  * structure to hold a room's info
@@ -95,14 +95,13 @@ typedef struct Room
 } Room;
 
 /*
- * structure to hold the map grid
- */
+ * structure to hold the map grid */
 typedef struct MapGrid
 {
     int height;
     int width;
     Creature* player;
-    Tile*** grid;
+    Cell*** grid;
     Room** rooms;
 } MapGrid;
 
@@ -110,8 +109,10 @@ typedef struct MapGrid
 /*
  * functions
  */
-MapGrid* mkMapGrid(char filename[]);
+MapGrid* mkMapGrid();
 void printMapGrid(MapGrid* map);
+
+Cell* mkCell(int x, int y);
 
 Room*  mkRoom(int x, int y, int h, int w);
 void addRoom(Room* room, MapGrid* mapgrid);
