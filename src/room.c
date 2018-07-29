@@ -57,3 +57,10 @@ int intersect(Room* room1, Room* room2) {
    }
    return 0;
 }
+
+int inRoom(Room* room, int x, int y) {
+    if (room->r_pos.x <= x && room->r_pos.y <= y) {
+        return 1;
+    }
+    return 0;
+}
