@@ -6,5 +6,7 @@ Cell* mkCell(int x, int y) {
     cell->c_pos.y = y;
     cell->tile = mkEmpty(x, y);
     cell->creature = NULL;
+    cell->seen = 0;
+    cell->visible = 0;
     return cell;
 }
