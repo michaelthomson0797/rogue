@@ -24,7 +24,7 @@ MapGrid* mkMapGrid() {
 
 
    srand(time(NULL));
-    int num_rooms = 0;
+    map->num_rooms = 0;
 
     for(int i = 0; i < MAX_ROOMS; i++) {
         int w = rand() % MAX_ROOM_SIZE + MIN_ROOM_SIZE;
@@ -36,20 +36,20 @@ MapGrid* mkMapGrid() {
         Room* new_room = mkRoom(x, y, h, w);
 
         int intersects = 0;
-        for(int j = 0; j < num_rooms; j++) {
+        for(int j = 0; j < map->num_rooms; j++) {
             if(intersect(new_room, map->rooms[j])) {
                 intersects = 1;
             }
         }
         
         if(intersects == 0) {
-            map->rooms[num_rooms++] = new_room;
+            map->rooms[map->num_rooms++] = new_room;
             addRoom(new_room, map);
         }
     }
 
 
-    for(int i = 1; i < num_rooms; i++) {
+    for(int i = 1; i < map->num_rooms; i++) {
         int VorH = rand() % 1;
 
         int x1 = map->rooms[i-1]->center.x;
@@ -72,6 +72,45 @@ MapGrid* mkMapGrid() {
 
 }
 
+void updateVisibility(MapGrid* map) {
+    for(int x = 0; x < map->width; x++) {
+        for(int y = 0; y < map->height; y++) {
+            map->grid[x][y]->visible = 0;
+        }
+    }
+
+    for(int i = 0; i < map->num_rooms; i++) {
+        if(inRoom(map->rooms[i], map->player->c_pos.x, map->player->c_pos.y)) {
+            for(int x = map->rooms[i]->r_pos1.x; x <= map->rooms[i]->r_pos2.x; x++) {
+                for(int y = map->rooms[i]->r_pos1.y; y <= map->rooms[i]->r_pos2.y; y++) {
+                    map->grid[x][y]->visible = 1;
+                    map->grid[x][y]->seen = 1;
+                }
+            }
+        }
+    }
+
+    map->grid[map->player->c_pos.x][map->player->c_pos.y]->seen = 1;
+    map->grid[map->player->c_pos.x][map->player->c_pos.y]->visible = 1;
+    map->grid[map->player->c_pos.x+1][map->player->c_pos.y]->seen = 1;
+    map->grid[map->player->c_pos.x+1][map->player->c_pos.y]->visible = 1;
+    map->grid[map->player->c_pos.x-1][map->player->c_pos.y]->seen = 1;
+    map->grid[map->player->c_pos.x-1][map->player->c_pos.y]->visible = 1;
+    map->grid[map->player->c_pos.x][map->player->c_pos.y+1]->seen = 1;
+    map->grid[map->player->c_pos.x][map->player->c_pos.y+1]->visible = 1;
+    map->grid[map->player->c_pos.x][map->player->c_pos.y-1]->seen = 1;
+    map->grid[map->player->c_pos.x][map->player->c_pos.y-1]->visible = 1;
+    map->grid[map->player->c_pos.x+1][map->player->c_pos.y+1]->seen = 1;
+    map->grid[map->player->c_pos.x+1][map->player->c_pos.y+1]->visible = 1;
+    map->grid[map->player->c_pos.x-1][map->player->c_pos.y+1]->seen = 1;
+    map->grid[map->player->c_pos.x-1][map->player->c_pos.y+1]->visible = 1;
+    map->grid[map->player->c_pos.x+1][map->player->c_pos.y-1]->seen = 1;
+    map->grid[map->player->c_pos.x+1][map->player->c_pos.y-1]->visible = 1;
+    map->grid[map->player->c_pos.x-1][map->player->c_pos.y-1]->seen = 1;
+    map->grid[map->player->c_pos.x-1][map->player->c_pos.y-1]->visible = 1;
+}
+            
+
 /*
  * clears the screen then prints the map onto the standard window
  */
@@ -79,10 +118,14 @@ void printMapGrid(MapGrid* map) {
    for(int y = 0; y < map->height; y++) {
        for(int x = 0; x < map->width; x++) {
            mvdelch(y, x);
-           if(map->grid[x][y]->creature != NULL) {
-                mvaddch(y, x, map->grid[x][y]->creature->type);
+           if(map->grid[x][y]->seen) {
+                if(map->grid[x][y]->creature != NULL) {
+                    mvaddch(y, x, map->grid[x][y]->creature->type);
+                } else {
+                    mvaddch(y, x, map->grid[x][y]->tile->type);
+                }
            } else {
-                mvaddch(y, x, map->grid[x][y]->tile->type);
+               mvaddch(y, x, ' ');
            }
        }
    }

@@ -16,6 +16,7 @@ int main() {
     curs_set(0);
 
 
+    updateVisibility(map);
     printMapGrid(map);
     refresh();
 
@@ -45,6 +46,7 @@ int main() {
                 }
                 break;
         }
+        updateVisibility(map);
         printMapGrid(map);
         refresh();
     }

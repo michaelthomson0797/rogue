@@ -93,6 +93,7 @@ typedef struct MapGrid
     int width;
     Creature* player;
     Cell*** grid;
+    int num_rooms;
     Room** rooms;
 } MapGrid;
 
@@ -101,6 +102,7 @@ typedef struct MapGrid
  * functions
  */
 MapGrid* mkMapGrid();
+void updateVisibility(MapGrid* map);
 void printMapGrid(MapGrid* map);
 
 Cell* mkCell(int x, int y);
@@ -111,6 +113,7 @@ void addTunnelH(MapGrid* mapgrid, int x1, int x2, int y);
 void addTunnelV(MapGrid* mapgrid, int y1, int y2, int x);
 int intersect(Room* room1, Room* room2);
 coord center(Room* room);
+int inRoom(Room* room, int x, int y);
 
 Tile* mkFloor(int x, int y);
 Tile* mkWall(int x, int y);
