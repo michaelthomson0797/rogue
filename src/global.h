@@ -10,6 +10,9 @@
 #include <ncurses.h>
 #include <time.h>
 
+/*
+ * useful functions
+ */
 #define max(x,y) ((x) >= (y)) ? (x) : (y)
 #define min(x,y) ((x) <= (y)) ? (x) : (y)
 
@@ -48,17 +51,6 @@ typedef struct Creature
     coord c_pos;
 } Creature;
 
-
-/*
- * structure for the grid of creatures
- */
-typedef struct CreatureGrid
-{
-    int height;
-    int width;
-    Creature*** grid;
-} CreatureGrid;
-
 /*
  * structure for tiles on the mapgrid
  */
@@ -67,8 +59,17 @@ typedef struct Tile
     char type;
     coord t_pos;
     int passable;
-    int playerPresent;
 } Tile;
+
+/*
+ * structure to hold map elements
+ */
+typedef struct Cell
+{
+    coord c_pos;
+    Tile* tile;
+    Creature* creature;
+} Cell;
 
 /*
  * structure to hold a room's info
@@ -83,14 +84,13 @@ typedef struct Room
 } Room;
 
 /*
- * structure to hold the map grid
- */
+ * structure to hold the map grid */
 typedef struct MapGrid
 {
     int height;
     int width;
     Creature* player;
-    Tile*** grid;
+    Cell*** grid;
     Room** rooms;
 } MapGrid;
 
@@ -98,8 +98,10 @@ typedef struct MapGrid
 /*
  * functions
  */
-MapGrid* mkMapGrid(char filename[]);
+MapGrid* mkMapGrid();
 void printMapGrid(MapGrid* map);
+
+Cell* mkCell(int x, int y);
 
 Room*  mkRoom(int x, int y, int h, int w);
 void addRoom(Room* room, MapGrid* mapgrid);

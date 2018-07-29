@@ -17,9 +17,9 @@ void addRoom(Room* room, MapGrid* mapgrid) {
     for(int x = room->r_pos1.x; x <= room->r_pos2.x; x++) {
         for(int y = room->r_pos1.y; y <= room->r_pos2.y; y++) {
             if (x == room->r_pos1.x || y == room->r_pos1.y || x == room->r_pos2.x || y == room->r_pos2.y) {
-                mapgrid->grid[x][y] = mkWall(x, y); 
+                mapgrid->grid[x][y]->tile = mkWall(x, y); 
             } else {
-                mapgrid->grid[x][y] = mkFloor(x, y); 
+                mapgrid->grid[x][y]->tile = mkFloor(x, y); 
             }   
         }   
     }   
@@ -29,9 +29,7 @@ void addTunnelH(MapGrid* mapgrid, int x1, int x2, int y) {
     int xmax = max(x1, x2);
     int xmin = min(x1, x2);
     for(int x = xmin; x <= xmax; x++) {
-        mapgrid->grid[x][y] = mkFloor(x, y);
-        //mapgrid->grid[x][y+1] = mkWall(x, y+1);
-        //mapgrid->grid[x][y-1] = mkWall(x, y-1);
+        mapgrid->grid[x][y]->tile = mkFloor(x, y);
     }
 }
 
@@ -39,9 +37,7 @@ void addTunnelV(MapGrid* mapgrid,int y1, int y2, int x) {
     int ymax = max(y1, y2);
     int ymin = min(y1, y2);
     for(int y = ymin; y <= ymax; y++) {
-        mapgrid->grid[x][y] = mkFloor(x, y);
-        //mapgrid->grid[x+1][y] = mkWall(x+1, y);
-        //mapgrid->grid[x-1][y] = mkWall(x-1, y);
+        mapgrid->grid[x][y]->tile = mkFloor(x, y);
     }
 }
 
