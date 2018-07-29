@@ -120,7 +120,7 @@ void printMapGrid(MapGrid* map) {
        for(int x = 0; x < map->width; x++) {
            mvdelch(y, x);
            if(map->grid[x][y]->seen) {
-                if(map->grid[x][y]->creature != NULL) {
+                if(map->grid[x][y]->creature != NULL && map->grid[x][y]->visible) {
                     mvaddch(y, x, map->grid[x][y]->creature->type);
                 } else {
                     mvaddch(y, x, map->grid[x][y]->tile->type);
