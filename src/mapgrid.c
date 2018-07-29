@@ -3,23 +3,25 @@
 /*
  * Creates a MapGrid pointer from a level text file
  */
-MapGrid* mkMapGrid(char filename[]) {
+MapGrid* mkMapGrid() {
     MapGrid* map = (MapGrid*) malloc(sizeof(MapGrid));
 
     map->height = HEIGHT;
     map->width = WIDTH;
     map->rooms = (Room**) malloc(MAX_ROOMS * sizeof(Room*));
-    map->grid = (Tile***) malloc(map->width * sizeof(Tile**));
+    map->grid = (Cell***) malloc(map->width * sizeof(Cell**));
 
     for(int i = 0; i < map->width; i++) {
-        map->grid[i] = (Tile**) malloc(map->height * sizeof(Tile*));
+        map->grid[i] = (Cell**) malloc(map->height * sizeof(Cell*));
     }
+
 
    for(int y = 0; y < map->height; y++) {
        for(int x = 0; x < map->width; x++) {
-           map->grid[x][y] = mkEmpty(x, y);
+           map->grid[x][y] = mkCell(x, y);
        }
    }
+
 
    srand(time(NULL));
     int num_rooms = 0;
@@ -40,13 +42,12 @@ MapGrid* mkMapGrid(char filename[]) {
             }
         }
         
-        printf("%d", num_rooms);
-        
         if(intersects == 0) {
             map->rooms[num_rooms++] = new_room;
             addRoom(new_room, map);
         }
     }
+
 
     for(int i = 1; i < num_rooms; i++) {
         int VorH = rand() % 1;
@@ -65,7 +66,6 @@ MapGrid* mkMapGrid(char filename[]) {
         }
     }
 
-
     map->player = mkCreature('@', map->rooms[0]->center.x, map->rooms[0]->center.y);
 
     return map;
@@ -79,10 +79,10 @@ void printMapGrid(MapGrid* map) {
    for(int y = 0; y < map->height; y++) {
        for(int x = 0; x < map->width; x++) {
            mvdelch(y, x);
-           if(map->grid[x][y]->playerPresent) {
-                mvaddch(y, x, '@');
+           if(map->grid[x][y]->creature != NULL) {
+                mvaddch(y, x, map->grid[x][y]->creature->type);
            } else {
-                mvaddch(y, x, map->grid[x][y]->type);
+                mvaddch(y, x, map->grid[x][y]->tile->type);
            }
        }
    }

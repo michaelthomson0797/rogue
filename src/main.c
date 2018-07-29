@@ -1,12 +1,13 @@
 #include "global.h"
 
 int main() {
-    char filename[] = "test";
-    MapGrid* map = mkMapGrid(filename);
-    CreatureGrid* creaturegrid = mkCreatureGrid();
+    MapGrid* map = mkMapGrid();
+
 
     Creature* player = map->player;
-    creaturegrid->grid[player->c_pos.x][player->c_pos.y] = player;
+
+
+    map->grid[player->c_pos.x][player->c_pos.y]->creature = player;
 
     initscr();
     cbreak();
@@ -14,8 +15,8 @@ int main() {
     noecho();
     curs_set(0);
 
+
     printMapGrid(map);
-    printCreatureGrid(creaturegrid);
     refresh();
 
     int ch;
@@ -24,32 +25,31 @@ int main() {
 
         switch(ch) {
             case KEY_LEFT:
-                if(map->grid[player->c_pos.x-1][player->c_pos.y]->passable) {
-                    creaturegrid->grid[player->c_pos.x--][player->c_pos.y] = NULL;
-                    creaturegrid->grid[player->c_pos.x][player->c_pos.y] = player;
+                if(map->grid[player->c_pos.x-1][player->c_pos.y]->tile->passable) {
+                    map->grid[player->c_pos.x--][player->c_pos.y]->creature = NULL;
+                    map->grid[player->c_pos.x][player->c_pos.y]->creature = player;
                 }
                 break;
             case KEY_RIGHT:
-                if(map->grid[player->c_pos.x+1][player->c_pos.y]->passable) {
-                    creaturegrid->grid[player->c_pos.x++][player->c_pos.y] = NULL;
-                    creaturegrid->grid[player->c_pos.x][player->c_pos.y] = player;
+                if(map->grid[player->c_pos.x+1][player->c_pos.y]->tile->passable) {
+                    map->grid[player->c_pos.x++][player->c_pos.y]->creature = NULL;
+                    map->grid[player->c_pos.x][player->c_pos.y]->creature = player;
                 }
                 break;
             case KEY_UP:
-                if(map->grid[player->c_pos.x][player->c_pos.y-1]->passable) {
-                    creaturegrid->grid[player->c_pos.x][player->c_pos.y--] = NULL;
-                    creaturegrid->grid[player->c_pos.x][player->c_pos.y] = player;
+                if(map->grid[player->c_pos.x][player->c_pos.y-1]->tile->passable) {
+                    map->grid[player->c_pos.x][player->c_pos.y--]->creature = NULL;
+                    map->grid[player->c_pos.x][player->c_pos.y]->creature = player;
                 }
                 break;
             case KEY_DOWN:
-                if(map->grid[player->c_pos.x][player->c_pos.y+1]->passable) {
-                    creaturegrid->grid[player->c_pos.x][player->c_pos.y++] = NULL;
-                    creaturegrid->grid[player->c_pos.x][player->c_pos.y] = player;
+                if(map->grid[player->c_pos.x][player->c_pos.y+1]->tile->passable) {
+                    map->grid[player->c_pos.x][player->c_pos.y++]->creature = NULL;
+                    map->grid[player->c_pos.x][player->c_pos.y]->creature = player;
                 }
                 break;
         }
         printMapGrid(map);
-        printCreatureGrid(creaturegrid);
         refresh();
     }
 
