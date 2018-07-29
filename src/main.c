@@ -26,26 +26,22 @@ int main() {
         switch(ch) {
             case KEY_LEFT:
                 if(map->grid[player->c_pos.x-1][player->c_pos.y]->tile->passable) {
-                    map->grid[player->c_pos.x--][player->c_pos.y]->creature = NULL;
-                    map->grid[player->c_pos.x][player->c_pos.y]->creature = player;
+                    mvCreature(map, player, player->c_pos.x-1, player->c_pos.y);
                 }
                 break;
             case KEY_RIGHT:
                 if(map->grid[player->c_pos.x+1][player->c_pos.y]->tile->passable) {
-                    map->grid[player->c_pos.x++][player->c_pos.y]->creature = NULL;
-                    map->grid[player->c_pos.x][player->c_pos.y]->creature = player;
+                    mvCreature(map, player, player->c_pos.x+1, player->c_pos.y);
                 }
                 break;
             case KEY_UP:
                 if(map->grid[player->c_pos.x][player->c_pos.y-1]->tile->passable) {
-                    map->grid[player->c_pos.x][player->c_pos.y--]->creature = NULL;
-                    map->grid[player->c_pos.x][player->c_pos.y]->creature = player;
+                    mvCreature(map, player, player->c_pos.x, player->c_pos.y-1);
                 }
                 break;
             case KEY_DOWN:
                 if(map->grid[player->c_pos.x][player->c_pos.y+1]->tile->passable) {
-                    map->grid[player->c_pos.x][player->c_pos.y++]->creature = NULL;
-                    map->grid[player->c_pos.x][player->c_pos.y]->creature = player;
+                    mvCreature(map, player, player->c_pos.x, player->c_pos.y+1);
                 }
                 break;
         }

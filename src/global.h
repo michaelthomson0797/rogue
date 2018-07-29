@@ -115,3 +115,4 @@ Tile* mkWall(int x, int y);
 Tile* mkEmpty(int x, int y);
 
 Creature* mkCreature(char type, int x, int y);
+void mvCreature(MapGrid* mapgrid, Creature* creature, int x, int y);
