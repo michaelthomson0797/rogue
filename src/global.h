@@ -51,17 +51,6 @@ typedef struct Creature
     coord c_pos;
 } Creature;
 
-
-/*
- * structure for the grid of creatures
- */
-typedef struct CreatureGrid
-{
-    int height;
-    int width;
-    Creature*** grid;
-} CreatureGrid;
-
 /*
  * structure for tiles on the mapgrid
  */
