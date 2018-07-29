@@ -106,6 +106,7 @@ void updateVisibility(MapGrid* map);
 void printMapGrid(MapGrid* map);
 
 Cell* mkCell(int x, int y);
+int isPassable(Cell* cell);
 
 Room*  mkRoom(int x, int y, int h, int w);
 void addRoom(Room* room, MapGrid* mapgrid);

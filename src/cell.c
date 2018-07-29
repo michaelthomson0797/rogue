@@ -10,3 +10,7 @@ Cell* mkCell(int x, int y) {
     cell->visible = 0;
     return cell;
 }
+
+int isPassable(Cell* cell) {
+    return cell->tile->passable && cell->creature == NULL;
+}

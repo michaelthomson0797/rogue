@@ -66,6 +66,7 @@ MapGrid* mkMapGrid() {
         }
     }
 
+    map->grid[map->rooms[1]->center.x][map->rooms[1]->center.y]->creature = mkCreature('T', map->rooms[1]->center.x, map->rooms[1]->center.y);
     map->player = mkCreature('@', map->rooms[0]->center.x, map->rooms[0]->center.y);
 
     return map;
