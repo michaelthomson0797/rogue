@@ -70,8 +70,17 @@ typedef struct Tile
     char type;
     coord t_pos;
     int passable;
-    int playerPresent;
 } Tile;
+
+/*
+ * structure to hold map elements
+ */
+typedef struct Cell
+{
+    coord c_pos;
+    Tile* tile;
+    Creature* creature;
+}
 
 /*
  * structure to hold a room's info
