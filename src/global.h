@@ -67,6 +67,8 @@ typedef struct Tile
 typedef struct Cell
 {
     coord c_pos;
+    int seen;
+    int visible;
     Tile* tile;
     Creature* creature;
 } Cell;
