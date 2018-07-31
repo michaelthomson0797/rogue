@@ -16,6 +16,7 @@ int main() {
     curs_set(0);
 
 
+    updateVisibility(map);
     printMapGrid(map);
     refresh();
 
@@ -25,30 +26,27 @@ int main() {
 
         switch(ch) {
             case KEY_LEFT:
-                if(map->grid[player->c_pos.x-1][player->c_pos.y]->tile->passable) {
-                    map->grid[player->c_pos.x--][player->c_pos.y]->creature = NULL;
-                    map->grid[player->c_pos.x][player->c_pos.y]->creature = player;
+                if(isPassable(map->grid[player->c_pos.x-1][player->c_pos.y])) {
+                    mvCreature(map, player, player->c_pos.x-1, player->c_pos.y);
                 }
                 break;
             case KEY_RIGHT:
-                if(map->grid[player->c_pos.x+1][player->c_pos.y]->tile->passable) {
-                    map->grid[player->c_pos.x++][player->c_pos.y]->creature = NULL;
-                    map->grid[player->c_pos.x][player->c_pos.y]->creature = player;
+                if(isPassable(map->grid[player->c_pos.x+1][player->c_pos.y])) {
+                    mvCreature(map, player, player->c_pos.x+1, player->c_pos.y);
                 }
                 break;
             case KEY_UP:
-                if(map->grid[player->c_pos.x][player->c_pos.y-1]->tile->passable) {
-                    map->grid[player->c_pos.x][player->c_pos.y--]->creature = NULL;
-                    map->grid[player->c_pos.x][player->c_pos.y]->creature = player;
+                if(isPassable(map->grid[player->c_pos.x][player->c_pos.y-1])) {
+                    mvCreature(map, player, player->c_pos.x, player->c_pos.y-1);
                 }
                 break;
             case KEY_DOWN:
-                if(map->grid[player->c_pos.x][player->c_pos.y+1]->tile->passable) {
-                    map->grid[player->c_pos.x][player->c_pos.y++]->creature = NULL;
-                    map->grid[player->c_pos.x][player->c_pos.y]->creature = player;
+                if(isPassable(map->grid[player->c_pos.x][player->c_pos.y+1])) {
+                    mvCreature(map, player, player->c_pos.x, player->c_pos.y+1);
                 }
                 break;
         }
+        updateVisibility(map);
         printMapGrid(map);
         refresh();
     }

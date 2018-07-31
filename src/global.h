@@ -67,6 +67,8 @@ typedef struct Tile
 typedef struct Cell
 {
     coord c_pos;
+    int seen;
+    int visible;
     Tile* tile;
     Creature* creature;
 } Cell;
@@ -91,6 +93,7 @@ typedef struct MapGrid
     int width;
     Creature* player;
     Cell*** grid;
+    int num_rooms;
     Room** rooms;
 } MapGrid;
 
@@ -99,9 +102,11 @@ typedef struct MapGrid
  * functions
  */
 MapGrid* mkMapGrid();
+void updateVisibility(MapGrid* map);
 void printMapGrid(MapGrid* map);
 
 Cell* mkCell(int x, int y);
+int isPassable(Cell* cell);
 
 Room*  mkRoom(int x, int y, int h, int w);
 void addRoom(Room* room, MapGrid* mapgrid);
@@ -109,9 +114,11 @@ void addTunnelH(MapGrid* mapgrid, int x1, int x2, int y);
 void addTunnelV(MapGrid* mapgrid, int y1, int y2, int x);
 int intersect(Room* room1, Room* room2);
 coord center(Room* room);
+int inRoom(Room* room, int x, int y);
 
 Tile* mkFloor(int x, int y);
 Tile* mkWall(int x, int y);
 Tile* mkEmpty(int x, int y);
 
 Creature* mkCreature(char type, int x, int y);
+void mvCreature(MapGrid* mapgrid, Creature* creature, int x, int y);
