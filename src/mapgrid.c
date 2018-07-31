@@ -48,7 +48,6 @@ MapGrid* mkMapGrid() {
         }
     }
 
-
     for(int i = 1; i < map->num_rooms; i++) {
         int VorH = rand() % 1;
 
@@ -73,6 +72,9 @@ MapGrid* mkMapGrid() {
 
 }
 
+/*
+ * updates what the player has seen and what is currently visible
+ */
 void updateVisibility(MapGrid* map) {
     for(int x = 0; x < map->width; x++) {
         for(int y = 0; y < map->height; y++) {
