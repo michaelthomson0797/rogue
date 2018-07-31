@@ -1,5 +1,8 @@
 #include "global.h"
 
+/*
+ * initialize and return a pointer to a Room
+ */
 Room* mkRoom(int x, int y, int h, int w) {
     Room* room = (Room*) malloc(sizeof(Room));
     room->r_pos1.x = x;
@@ -13,6 +16,9 @@ Room* mkRoom(int x, int y, int h, int w) {
     return room;
 }
 
+/*
+ * adds a room to the mapgrid
+ */
 void addRoom(Room* room, MapGrid* mapgrid) {
     for(int x = room->r_pos1.x; x <= room->r_pos2.x; x++) {
         for(int y = room->r_pos1.y; y <= room->r_pos2.y; y++) {
@@ -25,6 +31,9 @@ void addRoom(Room* room, MapGrid* mapgrid) {
     }   
 }
 
+/*
+ * creates a horizontal tunnel and adds it to the mapgrid
+ */
 void addTunnelH(MapGrid* mapgrid, int x1, int x2, int y) {
     int xmax = max(x1, x2);
     int xmin = min(x1, x2);
@@ -33,6 +42,9 @@ void addTunnelH(MapGrid* mapgrid, int x1, int x2, int y) {
     }
 }
 
+/*
+ * creates a vertical tunnela and adds it to the mapgrid
+ */
 void addTunnelV(MapGrid* mapgrid,int y1, int y2, int x) {
     int ymax = max(y1, y2);
     int ymin = min(y1, y2);
@@ -41,6 +53,9 @@ void addTunnelV(MapGrid* mapgrid,int y1, int y2, int x) {
     }
 }
 
+/*
+ * calculates the center of a Room and returns a coordinate
+ */
 coord center(Room* room) {
     coord Coord;
     
@@ -50,6 +65,9 @@ coord center(Room* room) {
     return Coord;
 }
 
+/*
+ * checks if two rooms are intersecting. returns 1 if they intersect, 0 otherwise
+ */
 int intersect(Room* room1, Room* room2) {
    if(room1->r_pos1.x <= room2->r_pos2.x && room1->r_pos2.x >= room2->r_pos1.x &&
         room1->r_pos1.y <= room2->r_pos2.y && room1->r_pos2.y >= room2->r_pos1.y) {
@@ -57,7 +75,9 @@ int intersect(Room* room1, Room* room2) {
    }
    return 0;
 }
-
+/*
+ * checks if a coordinate is inside a room
+ */
 int inRoom(Room* room, int x, int y) {
     if (room->r_pos1.x <= x && room->r_pos1.y <= y && room->r_pos2.x >= x && room->r_pos2.y >= y) {
         return 1;

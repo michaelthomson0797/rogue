@@ -1,5 +1,8 @@
 #include "global.h"
 
+/*
+ * Creates and initializes a new tile with floor properties
+ */
 Tile* mkFloor(int x, int y) {
     Tile* tile = (Tile*) malloc(sizeof(Tile));
     tile->type = FLOOR;
@@ -9,6 +12,9 @@ Tile* mkFloor(int x, int y) {
     return tile;
 }
 
+/*
+ * Creates and initializes a new tile with wall properties
+ */
 Tile* mkWall(int x, int y) {
     Tile* tile = (Tile*) malloc(sizeof(Tile));
     tile->type = WALL;
@@ -18,6 +24,9 @@ Tile* mkWall(int x, int y) {
     return tile;
 }
 
+/*
+ * Creates and initializes a new tile with empty properties
+ */
 Tile* mkEmpty(int x, int y) {
     Tile* tile = (Tile*) malloc(sizeof(Tile));
     tile->type = EMPTY;

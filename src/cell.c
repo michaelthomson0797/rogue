@@ -1,5 +1,8 @@
 #include "global.h"
 
+/*
+ * initializes and returns a pointer to a new Cell
+ */
 Cell* mkCell(int x, int y) {
     Cell* cell = (Cell*) malloc(sizeof(Cell));
     cell->c_pos.x = x;
@@ -11,6 +14,9 @@ Cell* mkCell(int x, int y) {
     return cell;
 }
 
+/*
+ * checks whether a cell is currently passable by a creature
+ */
 int isPassable(Cell* cell) {
     return cell->tile->passable && cell->creature == NULL;
 }
