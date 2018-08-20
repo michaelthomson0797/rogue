@@ -47,6 +47,8 @@ typedef struct coord {
  */
 typedef struct Creature
 {
+    struct Creature* next;
+    struct Creature* prev;
     char type;
     coord c_pos;
 } Creature;
