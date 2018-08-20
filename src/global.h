@@ -124,3 +124,8 @@ Tile* mkEmpty(int x, int y);
 
 Creature* mkCreature(char type, int x, int y);
 void mvCreature(MapGrid* mapgrid, Creature* creature, int x, int y);
+
+Creature* creatureFind(Creature** head, Creature* currentCreature);
+int creatureInsert(Creature** head, Creature* currentCreature);
+void creatureDelete(Creature** head, Creature* currentCreature);
+void printLinkedList(Creature* head);
