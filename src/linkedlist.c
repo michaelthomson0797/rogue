@@ -10,16 +10,21 @@ Creature* creatureFind(Creature** head, Creature* currentCreature) {
     return x;
 }
 
-int creatureInsert(Creature** head, Creature* currentCreature)
+void creatureInsert(Creature** head, Creature* currentCreature)
 {
-    currentCreature->next = (*head);
-    currentCreature->prev = NULL;
+    Creature* x = (*head);
 
-    if((*head) != NULL) {
-        (*head)->prev = currentCreature;
+    if((*head) == currentCreature) {
+        return;
     }
 
-    (*head) = currentCreature;
+    while(x->next != NULL) {
+        x = x->next;
+    }
+
+    x->next = currentCreature;
+    x->next->next = NULL;
+    x->next->prev = x; 
 }
 
 void creatureDelete(Creature** head, Creature* currentCreature)
@@ -42,7 +47,7 @@ void creatureDelete(Creature** head, Creature* currentCreature)
 void printLinkedList(Creature* head) 
 {
     for(Creature* x = head; x != NULL; x = x->next) {
-        printf("%d ", x->type);
+        printf("%c ", x->type);
     }
     printf("\n");
 }

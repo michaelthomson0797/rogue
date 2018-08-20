@@ -7,8 +7,7 @@ MapGrid* mkMapGrid() {
     MapGrid* map = (MapGrid*) malloc(sizeof(MapGrid));
 
     map->height = HEIGHT;
-    map->width = WIDTH;
-    map->rooms = (Room**) malloc(MAX_ROOMS * sizeof(Room*));
+    map->width = WIDTH; map->rooms = (Room**) malloc(MAX_ROOMS * sizeof(Room*));
     map->grid = (Cell***) malloc(map->width * sizeof(Cell**));
 
     for(int i = 0; i < map->width; i++) {
@@ -65,8 +64,13 @@ MapGrid* mkMapGrid() {
         }
     }
 
-    map->grid[map->rooms[1]->center.x][map->rooms[1]->center.y]->creature = mkCreature('T', map->rooms[1]->center.x, map->rooms[1]->center.y);
     map->player = mkCreature('@', map->rooms[0]->center.x, map->rooms[0]->center.y);
+    addCreature(map, map->player);
+    map->player->next = NULL;
+    map->player->prev = NULL;
+
+    addCreature(map, mkCreature('T', map->rooms[1]->center.x, map->rooms[1]->center.y));
+    addCreature(map, mkCreature('G', map->rooms[2]->center.x, map->rooms[2]->center.y));
 
     return map;
 
@@ -112,7 +116,6 @@ void updateVisibility(MapGrid* map) {
     map->grid[map->player->c_pos.x-1][map->player->c_pos.y-1]->seen = 1;
     map->grid[map->player->c_pos.x-1][map->player->c_pos.y-1]->visible = 1;
 }
-            
 
 /*
  * clears the screen then prints the map onto the standard window

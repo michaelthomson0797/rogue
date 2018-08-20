@@ -3,11 +3,7 @@
 int main() {
     MapGrid* map = mkMapGrid();
 
-
     Creature* player = map->player;
-
-
-    map->grid[player->c_pos.x][player->c_pos.y]->creature = player;
 
     initscr();
     cbreak();

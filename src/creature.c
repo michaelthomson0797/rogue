@@ -20,3 +20,8 @@ void mvCreature(MapGrid* mapgrid, Creature* creature, int x, int y) {
     creature->c_pos.y = y;
     mapgrid->grid[creature->c_pos.x][creature->c_pos.y]->creature = creature;
 }
+
+void addCreature(MapGrid* mapgrid, Creature* creature) {
+    mapgrid->grid[creature->c_pos.x][creature->c_pos.y]->creature = creature;
+    creatureInsert(&(mapgrid->player), creature);
+}
