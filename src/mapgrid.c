@@ -89,11 +89,11 @@ void updateVisibility(MapGrid *map)
 
     for (int i = 0; i < map->num_rooms; i++)
     {
-        if (inRoom(map->rooms[i], map->player->c_pos.x, map->player->c_pos.y))
+        if (inRoom(map->rooms[i], map->player->pos.x, map->player->pos.y))
         {
-            for (int x = map->rooms[i]->r_pos1.x; x <= map->rooms[i]->r_pos2.x; x++)
+            for (int x = map->rooms[i]->pos1.x; x <= map->rooms[i]->pos2.x; x++)
             {
-                for (int y = map->rooms[i]->r_pos1.y; y <= map->rooms[i]->r_pos2.y; y++)
+                for (int y = map->rooms[i]->pos1.y; y <= map->rooms[i]->pos2.y; y++)
                 {
                     map->grid[x][y]->visible = 1;
                     map->grid[x][y]->seen = 1;
@@ -102,24 +102,24 @@ void updateVisibility(MapGrid *map)
         }
     }
 
-    map->grid[map->player->c_pos.x][map->player->c_pos.y]->seen = 1;
-    map->grid[map->player->c_pos.x][map->player->c_pos.y]->visible = 1;
-    map->grid[map->player->c_pos.x + 1][map->player->c_pos.y]->seen = 1;
-    map->grid[map->player->c_pos.x + 1][map->player->c_pos.y]->visible = 1;
-    map->grid[map->player->c_pos.x - 1][map->player->c_pos.y]->seen = 1;
-    map->grid[map->player->c_pos.x - 1][map->player->c_pos.y]->visible = 1;
-    map->grid[map->player->c_pos.x][map->player->c_pos.y + 1]->seen = 1;
-    map->grid[map->player->c_pos.x][map->player->c_pos.y + 1]->visible = 1;
-    map->grid[map->player->c_pos.x][map->player->c_pos.y - 1]->seen = 1;
-    map->grid[map->player->c_pos.x][map->player->c_pos.y - 1]->visible = 1;
-    map->grid[map->player->c_pos.x + 1][map->player->c_pos.y + 1]->seen = 1;
-    map->grid[map->player->c_pos.x + 1][map->player->c_pos.y + 1]->visible = 1;
-    map->grid[map->player->c_pos.x - 1][map->player->c_pos.y + 1]->seen = 1;
-    map->grid[map->player->c_pos.x - 1][map->player->c_pos.y + 1]->visible = 1;
-    map->grid[map->player->c_pos.x + 1][map->player->c_pos.y - 1]->seen = 1;
-    map->grid[map->player->c_pos.x + 1][map->player->c_pos.y - 1]->visible = 1;
-    map->grid[map->player->c_pos.x - 1][map->player->c_pos.y - 1]->seen = 1;
-    map->grid[map->player->c_pos.x - 1][map->player->c_pos.y - 1]->visible = 1;
+    map->grid[map->player->pos.x][map->player->pos.y]->seen = 1;
+    map->grid[map->player->pos.x][map->player->pos.y]->visible = 1;
+    map->grid[map->player->pos.x + 1][map->player->pos.y]->seen = 1;
+    map->grid[map->player->pos.x + 1][map->player->pos.y]->visible = 1;
+    map->grid[map->player->pos.x - 1][map->player->pos.y]->seen = 1;
+    map->grid[map->player->pos.x - 1][map->player->pos.y]->visible = 1;
+    map->grid[map->player->pos.x][map->player->pos.y + 1]->seen = 1;
+    map->grid[map->player->pos.x][map->player->pos.y + 1]->visible = 1;
+    map->grid[map->player->pos.x][map->player->pos.y - 1]->seen = 1;
+    map->grid[map->player->pos.x][map->player->pos.y - 1]->visible = 1;
+    map->grid[map->player->pos.x + 1][map->player->pos.y + 1]->seen = 1;
+    map->grid[map->player->pos.x + 1][map->player->pos.y + 1]->visible = 1;
+    map->grid[map->player->pos.x - 1][map->player->pos.y + 1]->seen = 1;
+    map->grid[map->player->pos.x - 1][map->player->pos.y + 1]->visible = 1;
+    map->grid[map->player->pos.x + 1][map->player->pos.y - 1]->seen = 1;
+    map->grid[map->player->pos.x + 1][map->player->pos.y - 1]->visible = 1;
+    map->grid[map->player->pos.x - 1][map->player->pos.y - 1]->seen = 1;
+    map->grid[map->player->pos.x - 1][map->player->pos.y - 1]->visible = 1;
 }
 
 /*

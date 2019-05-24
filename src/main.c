@@ -7,7 +7,7 @@ int main() {
     Creature* player = map->player;
 
 
-    map->grid[player->c_pos.x][player->c_pos.y]->creature = player;
+    map->grid[player->pos.x][player->pos.y]->creature = player;
 
     initscr();
     cbreak();
@@ -26,23 +26,23 @@ int main() {
 
         switch(ch) {
             case KEY_LEFT:
-                if(isPassable(map->grid[player->c_pos.x-1][player->c_pos.y])) {
-                    mvCreature(map, player, player->c_pos.x-1, player->c_pos.y);
+                if(isPassable(map->grid[player->pos.x-1][player->pos.y])) {
+                    mvCreature(map, player, player->pos.x-1, player->pos.y);
                 }
                 break;
             case KEY_RIGHT:
-                if(isPassable(map->grid[player->c_pos.x+1][player->c_pos.y])) {
-                    mvCreature(map, player, player->c_pos.x+1, player->c_pos.y);
+                if(isPassable(map->grid[player->pos.x+1][player->pos.y])) {
+                    mvCreature(map, player, player->pos.x+1, player->pos.y);
                 }
                 break;
             case KEY_UP:
-                if(isPassable(map->grid[player->c_pos.x][player->c_pos.y-1])) {
-                    mvCreature(map, player, player->c_pos.x, player->c_pos.y-1);
+                if(isPassable(map->grid[player->pos.x][player->pos.y-1])) {
+                    mvCreature(map, player, player->pos.x, player->pos.y-1);
                 }
                 break;
             case KEY_DOWN:
-                if(isPassable(map->grid[player->c_pos.x][player->c_pos.y+1])) {
-                    mvCreature(map, player, player->c_pos.x, player->c_pos.y+1);
+                if(isPassable(map->grid[player->pos.x][player->pos.y+1])) {
+                    mvCreature(map, player, player->pos.x, player->pos.y+1);
                 }
                 break;
         }

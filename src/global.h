@@ -48,7 +48,7 @@ typedef struct coord
 typedef struct Creature
 {
     char type;
-    coord c_pos;
+    coord pos;
 } Creature;
 
 /*
@@ -57,7 +57,7 @@ typedef struct Creature
 typedef struct Tile
 {
     char type;
-    coord t_pos;
+    coord pos;
     int passable;
 } Tile;
 
@@ -66,7 +66,7 @@ typedef struct Tile
  */
 typedef struct Cell
 {
-    coord c_pos;
+    coord pos;
     int seen;
     int visible;
     Tile *tile;
@@ -78,8 +78,8 @@ typedef struct Cell
  */
 typedef struct Room
 {
-    coord r_pos1;
-    coord r_pos2;
+    coord pos1;
+    coord pos2;
     int height;
     int width;
     coord center;
