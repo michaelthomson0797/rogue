@@ -3,8 +3,9 @@
 /*
  * Creates and initializes a new tile with floor properties
  */
-Tile* mkFloor(int x, int y) {
-    Tile* tile = (Tile*) malloc(sizeof(Tile));
+Tile *mkFloor(int x, int y)
+{
+    Tile *tile = (Tile *)malloc(sizeof(Tile));
     tile->type = FLOOR;
     tile->pos.x = x;
     tile->pos.y = y;
@@ -15,8 +16,9 @@ Tile* mkFloor(int x, int y) {
 /*
  * Creates and initializes a new tile with wall properties
  */
-Tile* mkWall(int x, int y) {
-    Tile* tile = (Tile*) malloc(sizeof(Tile));
+Tile *mkWall(int x, int y)
+{
+    Tile *tile = (Tile *)malloc(sizeof(Tile));
     tile->type = WALL;
     tile->pos.x = x;
     tile->pos.y = y;
@@ -27,8 +29,9 @@ Tile* mkWall(int x, int y) {
 /*
  * Creates and initializes a new tile with empty properties
  */
-Tile* mkEmpty(int x, int y) {
-    Tile* tile = (Tile*) malloc(sizeof(Tile));
+Tile *mkEmpty(int x, int y)
+{
+    Tile *tile = (Tile *)malloc(sizeof(Tile));
     tile->type = EMPTY;
     tile->pos.x = x;
     tile->pos.y = y;
