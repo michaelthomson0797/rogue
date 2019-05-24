@@ -13,31 +13,31 @@
 /*
  * useful functions
  */
-#define max(x,y) ((x) >= (y)) ? (x) : (y)
-#define min(x,y) ((x) <= (y)) ? (x) : (y)
+#define max(x, y) ((x) >= (y)) ? (x) : (y)
+#define min(x, y) ((x) <= (y)) ? (x) : (y)
 
 /*
  * displayable items
  */
-#define FLOOR   '.'
-#define WALL    '#'
-#define DOOR    '+'
-#define EMPTY   ' '
+#define FLOOR '.'
+#define WALL '#'
+#define DOOR '+'
+#define EMPTY ' '
 
 /*
  * grid parameters
  */
-#define WIDTH           80
-#define HEIGHT          50
-#define MAX_ROOMS       10
-#define MIN_ROOM_SIZE   5
-#define MAX_ROOM_SIZE   12
-
+#define WIDTH 80
+#define HEIGHT 50
+#define MAX_ROOMS 10
+#define MIN_ROOM_SIZE 5
+#define MAX_ROOM_SIZE 12
 
 /*
  * coordinate structure
  */
-typedef struct coord {
+typedef struct coord
+{
     int x;
     int y;
 } coord;
@@ -69,8 +69,8 @@ typedef struct Cell
     coord c_pos;
     int seen;
     int visible;
-    Tile* tile;
-    Creature* creature;
+    Tile *tile;
+    Creature *creature;
 } Cell;
 
 /*
@@ -91,34 +91,33 @@ typedef struct MapGrid
 {
     int height;
     int width;
-    Creature* player;
-    Cell*** grid;
+    Creature *player;
+    Cell *grid[WIDTH][HEIGHT];
     int num_rooms;
-    Room** rooms;
+    Room *rooms[MAX_ROOMS];
 } MapGrid;
-
 
 /*
  * functions
  */
-MapGrid* mkMapGrid();
-void updateVisibility(MapGrid* map);
-void printMapGrid(MapGrid* map);
+MapGrid *mkMapGrid();
+void updateVisibility(MapGrid *map);
+void printMapGrid(MapGrid *map);
 
-Cell* mkCell(int x, int y);
-int isPassable(Cell* cell);
+Cell *mkCell(int x, int y);
+int isPassable(Cell *cell);
 
-Room*  mkRoom(int x, int y, int h, int w);
-void addRoom(Room* room, MapGrid* mapgrid);
-void addTunnelH(MapGrid* mapgrid, int x1, int x2, int y);
-void addTunnelV(MapGrid* mapgrid, int y1, int y2, int x);
-int intersect(Room* room1, Room* room2);
-coord center(Room* room);
-int inRoom(Room* room, int x, int y);
+Room *mkRoom(int x, int y, int h, int w);
+void addRoom(Room *room, MapGrid *mapgrid);
+void addTunnelH(MapGrid *mapgrid, int x1, int x2, int y);
+void addTunnelV(MapGrid *mapgrid, int y1, int y2, int x);
+int intersect(Room *room1, Room *room2);
+coord center(Room *room);
+int inRoom(Room *room, int x, int y);
 
-Tile* mkFloor(int x, int y);
-Tile* mkWall(int x, int y);
-Tile* mkEmpty(int x, int y);
+Tile *mkFloor(int x, int y);
+Tile *mkWall(int x, int y);
+Tile *mkEmpty(int x, int y);
 
-Creature* mkCreature(char type, int x, int y);
-void mvCreature(MapGrid* mapgrid, Creature* creature, int x, int y);
+Creature *mkCreature(char type, int x, int y);
+void mvCreature(MapGrid *mapgrid, Creature *creature, int x, int y);
