@@ -1,7 +1,8 @@
 #include "global.h"
 
 /*
- * initializes and returns a pointer to a new Tile
+ * initializes and returns a pointer to a new Tile.
+ * Default is a wall
  */
 Tile *mkTile(int x, int y)
 {

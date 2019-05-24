@@ -14,7 +14,7 @@ MapGrid *mkMapGrid()
     {
         for (int x = 0; x < map->width; x++)
         {
-            map->grid[x][y] = mkTile(x, y);
+            map->grid[x][y] = mkWall(x, y);
         }
     }
 
@@ -23,27 +23,28 @@ MapGrid *mkMapGrid()
 
     for (int i = 0; i < MAX_ROOMS; i++)
     {
+        // get a random width and height up to the maximums
         int w = rand() % MAX_ROOM_SIZE + MIN_ROOM_SIZE;
         int h = rand() % MAX_ROOM_SIZE + MIN_ROOM_SIZE;
 
+        // get a random top-left coordinat for the room
         int x = rand() % (WIDTH - w - 1);
         int y = rand() % (HEIGHT - h - 1);
 
+        // create the new room prospect
         Room *new_room = mkRoom(x, y, h, w);
 
-        int intersects = 0;
+        // look for intersections
+        bool intersects = false;
         for (int j = 0; j < map->num_rooms; j++)
         {
-            if (intersect(new_room, map->rooms[j]))
-            {
-                intersects = 1;
-            }
+            intersects = intersect(new_room, map->rooms[j]);
         }
 
-        if (intersects == 0)
+        // if there is no intersection, add the room to the mapgrid
+        if (intersects == false)
         {
-            map->rooms[map->num_rooms++] = new_room;
-            addRoom(new_room, map);
+            addRoom(map, new_room);
         }
     }
 
@@ -72,6 +73,22 @@ MapGrid *mkMapGrid()
     map->player = mkCreature('@', map->rooms[0]->center.x, map->rooms[0]->center.y);
 
     return map;
+}
+
+/*
+ * adds a room to the mapgrid
+ */
+void addRoom(MapGrid *mapgrid, Room *room)
+{
+    mapgrid->rooms[mapgrid->num_rooms++] = room;
+
+    for (int x = room->pos1.x+1; x <= room->pos2.x-1; x++)
+    {
+        for (int y = room->pos1.y+1; y <= room->pos2.y-1; y++)
+        {
+            mapgrid->grid[x][y] = mkFloor(x, y);
+        }
+    }
 }
 
 /*
@@ -129,23 +146,24 @@ void printMapGrid(MapGrid *map)
 {
     for (int y = 0; y < map->height; y++)
     {
+        move(y,0);
         for (int x = 0; x < map->width; x++)
         {
-            mvdelch(y, x);
+            delch();
             if (map->grid[x][y]->seen)
             {
                 if (map->grid[x][y]->creature != NULL && map->grid[x][y]->visible)
                 {
-                    mvaddch(y, x, map->grid[x][y]->creature->type);
+                    addch(map->grid[x][y]->creature->type);
                 }
                 else
                 {
-                    mvaddch(y, x, map->grid[x][y]->type);
+                    addch(map->grid[x][y]->type);
                 }
             }
             else
             {
-                mvaddch(y, x, ' ');
+                addch(EMPTY);
             }
         }
     }

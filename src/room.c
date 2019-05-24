@@ -17,26 +17,6 @@ Room *mkRoom(int x, int y, int h, int w)
     return room;
 }
 
-/*
- * adds a room to the mapgrid
- */
-void addRoom(Room *room, MapGrid *mapgrid)
-{
-    for (int x = room->pos1.x; x <= room->pos2.x; x++)
-    {
-        for (int y = room->pos1.y; y <= room->pos2.y; y++)
-        {
-            if (x == room->pos1.x || y == room->pos1.y || x == room->pos2.x || y == room->pos2.y)
-            {
-                mapgrid->grid[x][y] = mkWall(x, y);
-            }
-            else
-            {
-                mapgrid->grid[x][y] = mkFloor(x, y);
-            }
-        }
-    }
-}
 
 /*
  * creates a horizontal tunnel and adds it to the mapgrid
@@ -80,14 +60,24 @@ coord center(Room *room)
 /*
  * checks if two rooms are intersecting. returns 1 if they intersect, 0 otherwise
  */
-int intersect(Room *room1, Room *room2)
+bool intersect(Room *room1, Room *room2)
 {
-    if (room1->pos1.x <= room2->pos2.x && room1->pos2.x >= room2->pos1.x &&
-        room1->pos1.y <= room2->pos2.y && room1->pos2.y >= room2->pos1.y)
-    {
-        return 1;
-    }
-    return 0;
+    // if (room1->pos1.x <= room2->pos2.x && room1->pos2.x >= room2->pos1.x &&
+    //     room1->pos1.y <= room2->pos2.y && room1->pos2.y >= room2->pos1.y)
+    // {
+    //     return true;
+    // }
+    // return false;
+
+    // If one rectangle is on left side of other
+    if (room1->pos1.x > room2->pos2.x || room2->pos1.x > room1->pos2.x) 
+        return false; 
+  
+    // If one rectangle is above other 
+    if (room1->pos1.y < room2->pos2.y || room2->pos1.y < room1->pos2.y) 
+        return false; 
+  
+    return true; 
 }
 /*
  * checks if a coordinate is inside a room

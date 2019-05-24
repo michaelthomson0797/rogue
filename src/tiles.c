@@ -10,6 +10,10 @@ Tile *mkFloor(int x, int y)
     tile->pos.x = x;
     tile->pos.y = y;
     tile->passable = true;
+
+    tile->creature = NULL;
+    tile->seen = 0;
+    tile->visible = 0;
     return tile;
 }
 
@@ -23,6 +27,10 @@ Tile *mkWall(int x, int y)
     tile->pos.x = x;
     tile->pos.y = y;
     tile->passable = false;
+
+    tile->creature = NULL;
+    tile->seen = 0;
+    tile->visible = 0;
     return tile;
 }
 
@@ -36,5 +44,9 @@ Tile *mkEmpty(int x, int y)
     tile->pos.x = x;
     tile->pos.y = y;
     tile->passable = false;
+
+    tile->creature = NULL;
+    tile->seen = 0;
+    tile->visible = 0;
     return tile;
 }
