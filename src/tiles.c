@@ -9,7 +9,7 @@ Tile *mkFloor(int x, int y)
     tile->type = FLOOR;
     tile->pos.x = x;
     tile->pos.y = y;
-    tile->passable = 1;
+    tile->passable = true;
     return tile;
 }
 
@@ -22,7 +22,7 @@ Tile *mkWall(int x, int y)
     tile->type = WALL;
     tile->pos.x = x;
     tile->pos.y = y;
-    tile->passable = 0;
+    tile->passable = false;
     return tile;
 }
 
@@ -35,6 +35,6 @@ Tile *mkEmpty(int x, int y)
     tile->type = EMPTY;
     tile->pos.x = x;
     tile->pos.y = y;
-    tile->passable = 0;
+    tile->passable = false;
     return tile;
 }

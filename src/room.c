@@ -28,11 +28,11 @@ void addRoom(Room *room, MapGrid *mapgrid)
         {
             if (x == room->pos1.x || y == room->pos1.y || x == room->pos2.x || y == room->pos2.y)
             {
-                mapgrid->grid[x][y]->tile = mkWall(x, y);
+                mapgrid->grid[x][y] = mkWall(x, y);
             }
             else
             {
-                mapgrid->grid[x][y]->tile = mkFloor(x, y);
+                mapgrid->grid[x][y] = mkFloor(x, y);
             }
         }
     }
@@ -47,7 +47,7 @@ void addTunnelH(MapGrid *mapgrid, int x1, int x2, int y)
     int xmin = min(x1, x2);
     for (int x = xmin; x <= xmax; x++)
     {
-        mapgrid->grid[x][y]->tile = mkFloor(x, y);
+        mapgrid->grid[x][y] = mkFloor(x, y);
     }
 }
 
@@ -60,7 +60,7 @@ void addTunnelV(MapGrid *mapgrid, int y1, int y2, int x)
     int ymin = min(y1, y2);
     for (int y = ymin; y <= ymax; y++)
     {
-        mapgrid->grid[x][y]->tile = mkFloor(x, y);
+        mapgrid->grid[x][y] = mkFloor(x, y);
     }
 }
 

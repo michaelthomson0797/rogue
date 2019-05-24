@@ -9,6 +9,7 @@
 #include <stdlib.h>
 #include <ncurses.h>
 #include <time.h>
+#include <stdbool.h>
 
 /*
  * useful functions
@@ -56,22 +57,15 @@ typedef struct Creature
  */
 typedef struct Tile
 {
+    coord pos;
     char type;
-    coord pos;
-    int passable;
-} Tile;
-
-/*
- * structure to hold map elements
- */
-typedef struct Cell
-{
-    coord pos;
+    bool passable;
     int seen;
     int visible;
-    Tile *tile;
+
     Creature *creature;
-} Cell;
+
+} Tile;
 
 /*
  * structure to hold a room's info
@@ -92,7 +86,7 @@ typedef struct MapGrid
     int height;
     int width;
     Creature *player;
-    Cell *grid[WIDTH][HEIGHT];
+    Tile *grid[WIDTH][HEIGHT];
     int num_rooms;
     Room *rooms[MAX_ROOMS];
 } MapGrid;
@@ -104,8 +98,8 @@ MapGrid *mkMapGrid();
 void updateVisibility(MapGrid *map);
 void printMapGrid(MapGrid *map);
 
-Cell *mkCell(int x, int y);
-int isPassable(Cell *cell);
+Tile *mkTile(int x, int y);
+int isPassable(Tile *tile);
 
 Room *mkRoom(int x, int y, int h, int w);
 void addRoom(Room *room, MapGrid *mapgrid);

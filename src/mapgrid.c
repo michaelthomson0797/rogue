@@ -14,7 +14,7 @@ MapGrid *mkMapGrid()
     {
         for (int x = 0; x < map->width; x++)
         {
-            map->grid[x][y] = mkCell(x, y);
+            map->grid[x][y] = mkTile(x, y);
         }
     }
 
@@ -140,7 +140,7 @@ void printMapGrid(MapGrid *map)
                 }
                 else
                 {
-                    mvaddch(y, x, map->grid[x][y]->tile->type);
+                    mvaddch(y, x, map->grid[x][y]->type);
                 }
             }
             else
