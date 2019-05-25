@@ -14,7 +14,7 @@ MapGrid *mkMapGrid()
     {
         for (int x = 0; x < map->width; x++)
         {
-            map->grid[x][y] = mkWall(x, y);
+            map->grid[x][y] = mkEmpty(x, y);
         }
     }
 
@@ -83,11 +83,19 @@ void addRoom(MapGrid *mapgrid, Room *room)
 {
     mapgrid->rooms[mapgrid->num_rooms] = room;
 
-    for (int x = room->pos1.x+1; x <= room->pos2.x-1; x++)
+    for (int x = room->pos1.x; x <= room->pos2.x; x++)
     {
-        for (int y = room->pos1.y+1; y <= room->pos2.y-1; y++)
+        for (int y = room->pos1.y; y <= room->pos2.y; y++)
         {
-            mapgrid->grid[x][y] = mkFloor(x, y);
+            if(x == room->pos1.x || x == room->pos2.x ||
+               y == room->pos1.y || y == room->pos2.y)
+            {
+                mapgrid->grid[x][y] = mkWall(x, y);
+            }
+            else
+            {
+                mapgrid->grid[x][y] = mkFloor(x, y);
+            }
         }
     }
 }
