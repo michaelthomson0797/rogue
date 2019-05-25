@@ -1,30 +1,8 @@
 #include "global.h"
 
-int main()
-{
-    MapGrid *map = mkMapGrid();
-
-    Creature *player = map->player;
-
-    map->grid[player->pos.x][player->pos.y]->creature = player;
-
-    initscr();
-    cbreak();
-    keypad(stdscr, TRUE);
-    noecho();
-    curs_set(0);
-
-    updateVisibility(map);
-    printMapGrid(map);
-    refresh();
-
-    int ch;
-
-    while ((ch = getch()) != KEY_F(1))
+void handleInput(int ch) {
+    switch (ch)
     {
-
-        switch (ch)
-        {
         case KEY_LEFT:
             if (isPassable(map->grid[player->pos.x - 1][player->pos.y]))
             {
@@ -49,7 +27,33 @@ int main()
                 mvCreature(map, player, player->pos.x, player->pos.y + 1);
             }
             break;
-        }
+    }
+}
+
+int main()
+{
+    map = mkMapGrid();
+
+    player = map->player;
+
+    map->grid[player->pos.x][player->pos.y]->creature = player;
+
+    initscr();
+    cbreak();
+    keypad(stdscr, TRUE);
+    noecho();
+    curs_set(0);
+
+    updateVisibility(map);
+    printMapGrid(map);
+    refresh();
+
+    int ch;
+
+    while ((ch = getch()) != KEY_F(1))
+    {
+        handleInput(ch);
+        
         updateVisibility(map);
         printMapGrid(map);
         refresh();

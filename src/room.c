@@ -6,10 +6,10 @@
 Room *mkRoom(int x, int y, int h, int w)
 {
     Room *room = (Room *)malloc(sizeof(Room));
-    room->pos1.x = x;
-    room->pos1.y = y;
-    room->pos2.x = x + w;
-    room->pos2.y = y + h;
+    room->tl.x = x;
+    room->tl.y = y;
+    room->br.x = x + w;
+    room->br.y = y + h;
     room->height = h;
     room->width = w;
     room->center = center(room);
@@ -51,8 +51,8 @@ coord center(Room *room)
 {
     coord Coord;
 
-    Coord.x = room->pos1.x + room->width / 2;
-    Coord.y = room->pos1.y + room->height / 2;
+    Coord.x = room->tl.x + room->width / 2;
+    Coord.y = room->tl.y + room->height / 2;
 
     return Coord;
 }
@@ -60,22 +60,30 @@ coord center(Room *room)
 /*
  * checks if two rooms are intersecting. returns 1 if they intersect, 0 otherwise
  */
-bool intersect(Room *room1, Room *room2)
+int intersect(Room *room1, Room *room2)
 {
-    if(room1->pos1.x < room2->pos2.x && room1->pos2.x > room2->pos1.x &&
-       room1->pos1.y < room2->pos2.y && room1->pos2.y > room2->pos1.y)
-    {
-        return true;
-    }
+    // if(room1->tl.x < room2->br.x && room1->br.x > room2->tl.x &&
+    //    room1->tl.y < room2->br.y && room1->br.y > room2->tl.y)
+    // {
+    //     return true;
+    // }
   
-    return false; 
+    // return false; 
+
+    if ((room1->tl.x-1 > room2->br.x+1) || (room1->br.x+1 < room2->tl.x-1) ||
+        (room1->tl.y-1 > room2->br.y+1) || (room1->br.y+1 < room2->tl.y-1))
+    {
+        return 0;
+    }
+
+    return 1;
 }
 /*
  * checks if a coordinate is inside a room
  */
 int inRoom(Room *room, int x, int y)
 {
-    if (room->pos1.x <= x && room->pos1.y <= y && room->pos2.x >= x && room->pos2.y >= y)
+    if (room->tl.x <= x && room->tl.y <= y && room->br.x >= x && room->br.y >= y)
     {
         return 1;
     }

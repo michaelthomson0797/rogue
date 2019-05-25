@@ -20,17 +20,25 @@
 /*
  * displayable items
  */
-#define FLOOR '.'
+#define FLOOR 'T'
 #define WALL '#'
 #define DOOR '+'
 #define EMPTY ' '
 
 /*
+ * Directions
+ */
+#define UP 0
+#define DOWN 1
+#define LEFT 2
+#define RIGHT 3
+
+/*
  * grid parameters
  */
-#define WIDTH 80
-#define HEIGHT 50
-#define MAX_ROOMS 10
+#define WIDTH 1000
+#define HEIGHT 1000
+#define MAX_ROOMS 100000
 #define MIN_ROOM_SIZE 5
 #define MAX_ROOM_SIZE 12
 
@@ -72,8 +80,8 @@ typedef struct Tile
  */
 typedef struct Room
 {
-    coord pos1;
-    coord pos2;
+    coord tl;
+    coord br;
     int height;
     int width;
     coord center;
@@ -92,11 +100,18 @@ typedef struct MapGrid
 } MapGrid;
 
 /*
+ * Global Variables
+ */
+MapGrid *map;
+Creature *player;
+
+/*
  * functions
  */
 MapGrid *mkMapGrid();
 void updateVisibility(MapGrid *map);
 void printMapGrid(MapGrid *map);
+void floodFill(int x, int y, char targetType, char replaceType, int direction);
 
 Tile *mkTile(int x, int y);
 int isPassable(Tile *tile);
@@ -105,7 +120,7 @@ Room *mkRoom(int x, int y, int h, int w);
 void addRoom(MapGrid *mapgrid, Room *room);
 void addTunnelH(MapGrid *mapgrid, int x1, int x2, int y);
 void addTunnelV(MapGrid *mapgrid, int y1, int y2, int x);
-bool intersect(Room *room1, Room *room2);
+int intersect(Room *room1, Room *room2);
 coord center(Room *room);
 int inRoom(Room *room, int x, int y);
 
