@@ -24,12 +24,12 @@ MapGrid *mkMapGrid()
     for (int i = 0; i < MAX_ROOMS; i++)
     {
         // get a random width and height up to the maximums
-        int w = rand() % MAX_ROOM_SIZE + MIN_ROOM_SIZE;
-        int h = rand() % MAX_ROOM_SIZE + MIN_ROOM_SIZE;
+        int w = rand() % (MAX_ROOM_SIZE - MIN_ROOM_SIZE + 1) + MIN_ROOM_SIZE;
+        int h = rand() % (MAX_ROOM_SIZE - MIN_ROOM_SIZE + 1) + MIN_ROOM_SIZE;
 
         // get a random top-left coordinat for the room
-        int x = rand() % (WIDTH - w - 1);
-        int y = rand() % (HEIGHT - h - 1);
+        int x = rand() % (WIDTH - w);
+        int y = rand() % (HEIGHT - h);
 
         // create the new room prospect
         Room *new_room = mkRoom(x, y, h, w);
@@ -45,6 +45,7 @@ MapGrid *mkMapGrid()
         if (intersects == false)
         {
             addRoom(map, new_room);
+            map->num_rooms++;
         }
     }
 
@@ -80,7 +81,7 @@ MapGrid *mkMapGrid()
  */
 void addRoom(MapGrid *mapgrid, Room *room)
 {
-    mapgrid->rooms[mapgrid->num_rooms++] = room;
+    mapgrid->rooms[mapgrid->num_rooms] = room;
 
     for (int x = room->pos1.x+1; x <= room->pos2.x-1; x++)
     {

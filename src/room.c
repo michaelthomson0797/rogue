@@ -62,22 +62,13 @@ coord center(Room *room)
  */
 bool intersect(Room *room1, Room *room2)
 {
-    // if (room1->pos1.x <= room2->pos2.x && room1->pos2.x >= room2->pos1.x &&
-    //     room1->pos1.y <= room2->pos2.y && room1->pos2.y >= room2->pos1.y)
-    // {
-    //     return true;
-    // }
-    // return false;
-
-    // If one rectangle is on left side of other
-    if (room1->pos1.x > room2->pos2.x || room2->pos1.x > room1->pos2.x) 
-        return false; 
+    if(room1->pos1.x < room2->pos2.x && room1->pos2.x > room2->pos1.x &&
+       room1->pos1.y < room2->pos2.y && room1->pos2.y > room2->pos1.y)
+    {
+        return true;
+    }
   
-    // If one rectangle is above other 
-    if (room1->pos1.y < room2->pos2.y || room2->pos1.y < room1->pos2.y) 
-        return false; 
-  
-    return true; 
+    return false; 
 }
 /*
  * checks if a coordinate is inside a room

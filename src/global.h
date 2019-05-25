@@ -28,8 +28,8 @@
 /*
  * grid parameters
  */
-#define WIDTH 50
-#define HEIGHT 40
+#define WIDTH 80
+#define HEIGHT 50
 #define MAX_ROOMS 10
 #define MIN_ROOM_SIZE 5
 #define MAX_ROOM_SIZE 12
