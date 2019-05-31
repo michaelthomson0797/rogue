@@ -1,132 +1,128 @@
-/*
- * global definitions and variable declarations
- */
-
-/*
- * library inclusions
- */
 #include <stdio.h>
 #include <stdlib.h>
+#include <math.h>
 #include <ncurses.h>
-#include <time.h>
-#include <stdbool.h>
 
-/*
- * useful functions
- */
-#define max(x, y) ((x) >= (y)) ? (x) : (y)
-#define min(x, y) ((x) <= (y)) ? (x) : (y)
+// Map Dimensions
+#define HEIGHT 15
+#define WIDTH 50
 
-/*
- * displayable items
- */
-#define FLOOR 'T'
-#define WALL '#'
-#define DOOR '+'
-#define EMPTY ' '
 
-/*
- * Directions
- */
-#define UP 0
-#define DOWN 1
-#define LEFT 2
-#define RIGHT 3
-
-/*
- * grid parameters
- */
-#define WIDTH 1000
-#define HEIGHT 1000
-#define MAX_ROOMS 100000
-#define MIN_ROOM_SIZE 5
-#define MAX_ROOM_SIZE 12
-
-/*
- * coordinate structure
- */
-typedef struct coord
+//Tile types
+enum tileTypes
 {
-    int x;
-    int y;
-} coord;
+  FLOOR,
+  WALL,
+  EMPTY
+};
 
-/*
- * structure to represent creatures
- */
-typedef struct Creature
+// Directions
+enum direction
 {
-    char type;
-    coord pos;
-} Creature;
+  UP,
+  DOWN,
+  LEFT,
+  RIGHT
+};
 
-/*
- * structure for tiles on the mapgrid
- */
-typedef struct Tile
+// Actions
+enum actionTypes
 {
-    coord pos;
-    char type;
-    bool passable;
-    int seen;
-    int visible;
+  WALK,
+  ATTACK
+};
 
-    Creature *creature;
+// structure declarations
+typedef struct Actor Actor;
+typedef struct actorNode actorNode;
+typedef struct Tile Tile;
+typedef struct Map Map;
+typedef struct Game Game;
+typedef struct Action Action;
 
-} Tile;
+// global variables
+Map* map;
 
-/*
- * structure to hold a room's info
- */
-typedef struct Room
+// Actor types
+enum actorTypes
 {
-    coord tl;
-    coord br;
-    int height;
-    int width;
-    coord center;
-} Room;
+  PLAYER,
+  MONSTER
+};
 
-/*
- * structure to hold the map grid */
-typedef struct MapGrid
+// Actor Structure
+struct Actor
 {
-    int height;
-    int width;
-    Creature *player;
-    Tile *grid[WIDTH][HEIGHT];
-    int num_rooms;
-    Room *rooms[MAX_ROOMS];
-} MapGrid;
+  int type;
+  char appearance;
+  int energy;
+  int speed;
+  int x, y;
+};
 
-/*
- * Global Variables
- */
-MapGrid *map;
-Creature *player;
+struct actorNode
+{
+  Actor *actor;
+  actorNode *next;
+};
 
-/*
- * functions
- */
-MapGrid *mkMapGrid();
-void updateVisibility(MapGrid *map);
-void printMapGrid(MapGrid *map);
-void floodFill(int x, int y, char targetType, char replaceType, int direction);
+// Tile Structure
+struct Tile
+{
+  int type;
+  char appearance;
+  int passable;
+  int explored;
+  int visible;
+  Actor *actor;
+  int x, y;
 
-Tile *mkTile(int x, int y);
-int isPassable(Tile *tile);
+};
 
-Room *mkRoom(int x, int y, int h, int w);
-void addRoom(MapGrid *mapgrid, Room *room);
-void addTunnelH(MapGrid *mapgrid, int x1, int x2, int y);
-void addTunnelV(MapGrid *mapgrid, int y1, int y2, int x);
-int intersect(Room *room1, Room *room2);
-coord center(Room *room);
-int inRoom(Room *room, int x, int y);
+// Map structure
+struct Map
+{
+  int height;
+  int width;
+  Tile *grid[HEIGHT][WIDTH];
+};
 
-Tile *mkFloor(int x, int y);
-Tile *mkWall(int x, int y);
-Tile *mkEmpty(int x, int y);
+// Game Structure
+struct Game
+{
+  actorNode *currentActorNode;
+  actorNode *actorHead;
+};
 
-Creature *mkCreature(char type, int x, int y);
-void mvCreature(MapGrid *mapgrid, Creature *creature, int x, int y);
+// Action structure
+struct Action
+{
+  int type;
+  Actor *actor;
+  int x;
+  int y;
+};
+
+
+// Method Signatures
+// Actor methods
+Actor *mkActor(int type, int x, int y);
+Action *getAction(Actor *actor);
+
+// Tile methods
+Tile *mkTile(int type, int x, int y);
+char getAppearance(Tile *tile);
+
+// Display methods
+void initDisplay();
+void render(Map *map);
+
+// game methods
+void run(Game *game);
+
+// map methods
+Map *mkMap();
+
+// Action methods
+Action *mkAction(int type, Actor *actor, int x, int y);
+void performAction(Action *action);

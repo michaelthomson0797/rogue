@@ -1,25 +1,42 @@
 #include "global.h"
 
-/*
- * initializes and returns a pointer to a new Tile.
- * Default is a wall
- */
-Tile *mkTile(int x, int y)
+// Constructor for making a tile given inputs
+Tile *mkGenericTile(int type, char appearance, int passable, int explored,
+             int visible, Actor *actor, int x, int y)
 {
-    Tile *tile = (Tile *)malloc(sizeof(Tile));
-    tile->pos.x = x;
-    tile->pos.y = y;
-    tile = mkWall(x, y);
-    tile->creature = NULL;
-    tile->seen = 0;
-    tile->visible = 0;
-    return tile;
+  Tile *tile = malloc(sizeof(Tile));
+  tile->type = type;
+  tile->appearance = appearance;
+  tile->passable = passable;
+  tile->explored = explored;
+  tile->visible = visible;
+  tile->actor = actor;
+  tile->x = x;
+  tile->y = y;
+
+  return tile;
 }
 
-/*
- * checks whether a Tile is currently passable by a creature
- */
-int isPassable(Tile *tile)
+// abstracted tile creation. takes a type and creates the tile
+Tile *mkTile(int type, int x, int y)
 {
-    return tile->passable && tile->creature == NULL;
+  switch (type)
+  {
+  case WALL:
+    return mkGenericTile(WALL, '#', 0, 0, 0, NULL, x, y);
+  
+  case FLOOR:
+    return mkGenericTile(FLOOR, '.', 1, 0, 0, NULL, x, y);
+  
+  case EMPTY:
+    return mkGenericTile(EMPTY, ' ', 0, 0, 0, NULL, x, y);
+    
+  default:
+    return mkGenericTile(EMPTY, ' ', 0, 0, 0, NULL, x, y);
+  }
+}
+
+// given a pointer to a tile, this will get the appearance
+char getAppearance(Tile *tile) {
+  return tile->actor == NULL ? tile->appearance : tile->actor->appearance;
 }
