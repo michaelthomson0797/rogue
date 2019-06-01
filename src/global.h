@@ -128,7 +128,7 @@ char getAppearance(Tile *tile);
 
 // Display methods
 void initDisplay();
-void render(Map *map);
+void render(Map *map, Game *game);
 
 // game methods
 void run(Game *game);

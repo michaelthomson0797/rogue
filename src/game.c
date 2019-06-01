@@ -18,13 +18,13 @@ void run(Game *game)
 
   initDisplay();
 
-  render(map);
+  render(map, game);
 
   int playing = 1;
 
   while(playing) {
     process(game);
-    render(map);
+    render(map, game);
   }
 
   endwin();
