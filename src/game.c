@@ -9,12 +9,9 @@ void run(Game *game)
 
   // create the hero
   addActor(game, PLAYER, 20, 5);
-  addActor(game, MONSTER, 30, 7);
-  addActor(game, MONSTER, 33, 7);
-  addActor(game, MONSTER, 28, 7);
-  addActor(game, MONSTER, 30, 4);
-  addActor(game, MONSTER, 27, 4);
-  addActor(game, MONSTER, 28, 4);
+  addActor(game, SLUG, 30, 7);
+  addActor(game, CHEETAH, 33, 7);
+  addActor(game, GOBLIN, 28, 7);
 
   // set current actor
   game->currentActorNode = game->actorHead;

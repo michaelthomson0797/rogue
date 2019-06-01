@@ -21,10 +21,16 @@ Actor *mkActor(int type, int x, int y)
   switch (type)
   {
   case PLAYER:
-    return mkGenericActor(PLAYER, '@', 10, 5, x, y);
+    return mkGenericActor(PLAYER, '@', 12, 6, x, y);
   
-  case MONSTER:
-    return mkGenericActor(MONSTER, 'T', 10, 10, x, y);
+  case GOBLIN:
+    return mkGenericActor(GOBLIN, 'G', 12, 3, x, y);
+
+  case SLUG:
+    return mkGenericActor(SLUG, 'S', 12, 2, x, y);
+
+  case CHEETAH:
+    return mkGenericActor(CHEETAH, 'C', 12, 12, x, y);
   
   default:
     break;
@@ -33,8 +39,11 @@ Actor *mkActor(int type, int x, int y)
   return NULL;
 }
 
+// given an actor, this will return an action that the actor
+// would like to perform
 Action *getAction(Actor *actor) {
 
+  // if there is not enough energy, the creature waits
   if(actor->energy < ENERGYCOST) {
       actor->energy += actor->speed;
       return mkAction(WAIT, actor, actor->x, actor->y);
@@ -55,10 +64,13 @@ Action *getAction(Actor *actor) {
 
       case KEY_DOWN:
         return mkAction(WALK, actor, actor->x, actor->y+1);
+
+      case 'c':
+        return mkAction(WAIT, actor, actor->x, actor->y);
     }
   }
 
-  if(actor->type == MONSTER) {
+  if(actor->type != PLAYER) {
     
     int r = rand() % 4;
     switch (r)

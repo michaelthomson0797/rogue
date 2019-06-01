@@ -7,7 +7,7 @@
 #define HEIGHT 15
 #define WIDTH 50
 
-#define ENERGYCOST 10
+#define ENERGYCOST 12
 
 
 //Tile types
@@ -50,7 +50,9 @@ Map* map;
 enum actorTypes
 {
   PLAYER,
-  MONSTER
+  GOBLIN,
+  CHEETAH,
+  SLUG
 };
 
 // Actor Structure
