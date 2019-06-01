@@ -552,6 +552,19 @@ void nodeNeighbors(ASNeighborList neighbors, void *node, void *context){
     if(map->grid[y][x-1]->passable) {
         ASNeighborListAdd(neighbors ,map->grid[y][x-1], 1);
     }
+
+    if(map->grid[y-1][x-1]->passable) {
+        ASNeighborListAdd(neighbors ,map->grid[y-1][x-1], 1);
+    }
+    if(map->grid[y-1][x+1]->passable) {
+        ASNeighborListAdd(neighbors ,map->grid[y-1][x+1], 1);
+    }
+    if(map->grid[y+1][x-1]->passable) {
+        ASNeighborListAdd(neighbors ,map->grid[y+1][x-1], 1);
+    }
+    if(map->grid[y+1][x+1]->passable) {
+        ASNeighborListAdd(neighbors ,map->grid[y+1][x+1], 1);
+    }
 }
 
 float pathCostHeuristic(void *fromNode, void *toNode, void *context){

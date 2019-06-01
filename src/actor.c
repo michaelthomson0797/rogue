@@ -72,7 +72,19 @@ Action *getAction(Actor *actor) {
       case KEY_DOWN:
         return mkAction(WALK, actor, actor->x, actor->y+1);
 
-      case 'c':
+      case KEY_HOME:
+        return mkAction(WALK, actor, actor->x-1, actor->y-1);
+
+      case KEY_PPAGE:
+        return mkAction(WALK, actor, actor->x+1, actor->y-1);
+
+      case KEY_END:
+        return mkAction(WALK, actor, actor->x-1, actor->y+1);
+
+      case KEY_NPAGE:
+        return mkAction(WALK, actor, actor->x+1, actor->y+1);
+
+      default:
         return mkAction(WAIT, actor, actor->x, actor->y);
     }
   }
