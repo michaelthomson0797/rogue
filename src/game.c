@@ -14,10 +14,10 @@ void run()
   nodeSource->pathCostHeuristic = &pathCostHeuristic;
 
   // create the hero
-  addActor(PLAYER, 20, 5);
+  addActor(PLAYER, 1, 1);
 
   // create some monsters
-  addActor(GOBLIN, 28, 7);
+  addActor(GOBLIN, 149, 29);
 
   // set current actor
   game->currentActorNode = game->actorHead;

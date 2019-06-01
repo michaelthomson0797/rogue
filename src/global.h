@@ -5,8 +5,10 @@
 #include "AStar.h"
 
 // Map Dimensions
-#define HEIGHT 15
-#define WIDTH 50
+#define HEIGHT 31
+#define WIDTH 151
+
+#define MAPNAME "testmap2.txt"
 
 #define ENERGYCOST 12
 

@@ -7,7 +7,7 @@ Map *mkMap() {
   map->height = HEIGHT;
   map->width = WIDTH;
 
-  FILE *file = fopen("testmap.txt", "r");
+  FILE *file = fopen(MAPNAME, "r");
   char c;
 
   if(file == NULL)
