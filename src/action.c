@@ -12,13 +12,15 @@ Action *mkAction(int type, Actor *actor, int x, int y) {
 }
 
 void walk(Actor *actor, int x, int y) {
+
+  actor->energy = actor->energy-20;
   
   // check if out of bounds
   if(x >= map->width || x < 0 || y >= map->height || y < 0) {
     return;
   }
 
-  // check if actor exists there
+  // check if an actor exists there
   if(map->grid[y][x]->actor != NULL) {
     return;
   }
@@ -43,6 +45,9 @@ void performAction(Action *action) {
     walk(action->actor, action->x, action->y);
     break;
   
+  case WAIT:
+    break;
+
   default:
     break;
   }

@@ -21,10 +21,10 @@ Actor *mkActor(int type, int x, int y)
   switch (type)
   {
   case PLAYER:
-    return mkGenericActor(PLAYER, '@', 20, 10, x, y);
+    return mkGenericActor(PLAYER, '@', 10, 5, x, y);
   
   case MONSTER:
-    return mkGenericActor(MONSTER, 'T', 10, 5, x, y);
+    return mkGenericActor(MONSTER, 'T', 10, 10, x, y);
   
   default:
     break;
@@ -34,6 +34,12 @@ Actor *mkActor(int type, int x, int y)
 }
 
 Action *getAction(Actor *actor) {
+
+  if(actor->energy < ENERGYCOST) {
+      actor->energy += actor->speed;
+      return mkAction(WAIT, actor, actor->x, actor->y);
+  }
+
   if(actor->type == PLAYER) {
     int ch = getch();
     switch (ch)
@@ -53,7 +59,22 @@ Action *getAction(Actor *actor) {
   }
 
   if(actor->type == MONSTER) {
-    return mkAction(WALK, actor, actor->x-1, actor->y);
+    srand(time(NULL));
+    int r = rand() % 4;
+    switch (r)
+    {
+      case 0:
+        return mkAction(WALK, actor, actor->x-1, actor->y);
+      
+      case 1:
+        return mkAction(WALK, actor, actor->x+1, actor->y);
+
+      case 2:
+        return mkAction(WALK, actor, actor->x, actor->y-1);
+
+      case 3:
+        return mkAction(WALK, actor, actor->x, actor->y+1);
+    }
   }
 
   return NULL;

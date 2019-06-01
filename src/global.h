@@ -7,6 +7,8 @@
 #define HEIGHT 15
 #define WIDTH 50
 
+#define ENERGYCOST 10
+
 
 //Tile types
 enum tileTypes
@@ -29,7 +31,8 @@ enum direction
 enum actionTypes
 {
   WALK,
-  ATTACK
+  ATTACK,
+  WAIT
 };
 
 // structure declarations
