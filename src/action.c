@@ -18,6 +18,11 @@ void walk(Actor *actor, int x, int y) {
     return;
   }
 
+  // check if actor exists there
+  if(map->grid[y][x]->actor != NULL) {
+    return;
+  }
+
   // check if we can walk there
   if(map->grid[y][x]->passable == 0) {
     return;
