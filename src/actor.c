@@ -1,7 +1,7 @@
 #include "global.h"
 
 // generic constructor for new actor
-Actor *mkGenericActor(int type, char appearance, int energy, int speed, int x, int y)
+Actor *mkGenericActor(int type, char appearance, int energy, int speed, int health, int damage, int x, int y)
 {
   Actor *actor = malloc(sizeof(Actor));
 
@@ -9,6 +9,8 @@ Actor *mkGenericActor(int type, char appearance, int energy, int speed, int x, i
   actor->appearance = appearance;
   actor->energy = energy;
   actor->speed = speed;
+  actor->health = health;
+  actor->damage = damage;
   actor->x = x;
   actor->y = y;
 
@@ -21,16 +23,16 @@ Actor *mkActor(int type, int x, int y)
   switch (type)
   {
   case PLAYER:
-    return mkGenericActor(PLAYER, '@', 12, 6, x, y);
+    return mkGenericActor(PLAYER, '@', 12, 6, 100, 20, x, y);
   
   case GOBLIN:
-    return mkGenericActor(GOBLIN, 'G', 12, 3, x, y);
+    return mkGenericActor(GOBLIN, 'G', 12, 3, 10, 10, x, y);
 
   case SLUG:
-    return mkGenericActor(SLUG, 'S', 12, 2, x, y);
+    return mkGenericActor(SLUG, 'S', 12, 2, 50, 10, x, y);
 
   case CHEETAH:
-    return mkGenericActor(CHEETAH, 'C', 12, 12, x, y);
+    return mkGenericActor(CHEETAH, 'C', 12, 12, 20, 80, x, y);
   
   default:
     break;
@@ -42,6 +44,11 @@ Actor *mkActor(int type, int x, int y)
 // given an actor, this will return an action that the actor
 // would like to perform
 Action *getAction(Actor *actor) {
+
+  // check if the creature is dead
+  if(actor->health <= 0) {
+    return mkAction(DIE, actor, actor->x, actor->y);
+  }
 
   // if there is not enough energy, the creature waits
   if(actor->energy < ENERGYCOST) {

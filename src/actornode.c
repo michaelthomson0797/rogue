@@ -21,11 +21,12 @@ void appendActor(Game *game, Actor *actor) {
   n->next = mkActorNode(actor);
 }
 
-void removeActor(Game *game, ActorNode *actorNode) {
+void removeActor(Game *game, Actor *actor) {
   ActorNode *n = game->actorHead;
-  while(n->next != actorNode) {
+  while(n->next->actor != actor) {
     n = n->next;
   }
+  ActorNode *temp = n->next;
   n->next = n->next->next;
-  actorNode->next = NULL;
+  temp->next = NULL;
 }

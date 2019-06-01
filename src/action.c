@@ -11,6 +11,12 @@ Action *mkAction(int type, Actor *actor, int x, int y) {
   return action;
 }
 
+void attack(Actor *attacker, Actor *defender) {
+  attacker->energy = attacker->energy-20;
+
+  defender->health = defender->health - attacker->damage;
+}
+
 void walk(Actor *actor, int x, int y) {
 
   actor->energy = actor->energy-20;
@@ -22,6 +28,7 @@ void walk(Actor *actor, int x, int y) {
 
   // check if an actor exists there
   if(map->grid[y][x]->actor != NULL) {
+    attack(actor, map->grid[y][x]->actor);
     return;
   }
 
@@ -38,6 +45,11 @@ void walk(Actor *actor, int x, int y) {
   map->grid[y][x]->actor = actor;
 }
 
+void kill(Actor *actor) {
+  map->grid[actor->y][actor->x]->appearance = 'X';
+  map->grid[actor->y][actor->x]->actor = NULL;
+}
+
 void performAction(Action *action) {
   switch (action->type)
   {
@@ -46,6 +58,10 @@ void performAction(Action *action) {
     break;
   
   case WAIT:
+    break;
+
+  case DIE:
+    kill(action->actor);
     break;
 
   default:

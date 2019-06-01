@@ -32,7 +32,8 @@ enum actionTypes
 {
   WALK,
   ATTACK,
-  WAIT
+  WAIT,
+  DIE
 };
 
 // structure declarations
@@ -62,6 +63,8 @@ struct Actor
   char appearance;
   int energy;
   int speed;
+  int health;
+  int damage;
   int x, y;
 };
 
@@ -117,7 +120,7 @@ Action *getAction(Actor *actor);
 // ActorNode methods
 ActorNode *mkActorNode(Actor *actor);
 void appendActor(Game *game, Actor *actor);
-void removeActor(Game *game, ActorNode *actorNode);
+void removeActor(Game *game, Actor *actor);
 
 // Tile methods
 Tile *mkTile(int type, int x, int y);
