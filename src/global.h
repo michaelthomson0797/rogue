@@ -34,7 +34,7 @@ enum actionTypes
 
 // structure declarations
 typedef struct Actor Actor;
-typedef struct actorNode actorNode;
+typedef struct ActorNode ActorNode;
 typedef struct Tile Tile;
 typedef struct Map Map;
 typedef struct Game Game;
@@ -60,10 +60,10 @@ struct Actor
   int x, y;
 };
 
-struct actorNode
+struct ActorNode
 {
   Actor *actor;
-  actorNode *next;
+  ActorNode *next;
 };
 
 // Tile Structure
@@ -90,8 +90,8 @@ struct Map
 // Game Structure
 struct Game
 {
-  actorNode *currentActorNode;
-  actorNode *actorHead;
+  ActorNode *currentActorNode;
+  ActorNode *actorHead;
 };
 
 // Action structure
@@ -109,6 +109,11 @@ struct Action
 Actor *mkActor(int type, int x, int y);
 Action *getAction(Actor *actor);
 
+// ActorNode methods
+ActorNode *mkActorNode(Actor *actor);
+void appendActor(Game *game, Actor *actor);
+void removeActor(Game *game, ActorNode *actorNode);
+
 // Tile methods
 Tile *mkTile(int type, int x, int y);
 char getAppearance(Tile *tile);
@@ -119,6 +124,9 @@ void render(Map *map);
 
 // game methods
 void run(Game *game);
+void process(Game *game);
+void addActor(Game *game, int type, int x, int y);
+void nextActor(Game *game);
 
 // map methods
 Map *mkMap();

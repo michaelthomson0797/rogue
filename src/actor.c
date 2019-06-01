@@ -24,7 +24,7 @@ Actor *mkActor(int type, int x, int y)
     return mkGenericActor(PLAYER, '@', 20, 10, x, y);
   
   case MONSTER:
-    return mkGenericActor(MONSTER, '@', 10, 5, x, y);
+    return mkGenericActor(MONSTER, 'T', 10, 5, x, y);
   
   default:
     break;
@@ -50,6 +50,10 @@ Action *getAction(Actor *actor) {
       case KEY_DOWN:
         return mkAction(WALK, actor, actor->x, actor->y+1);
     }
+  }
+
+  if(actor->type == MONSTER) {
+    return mkAction(WALK, actor, actor->x-1, actor->y);
   }
 
   return NULL;
