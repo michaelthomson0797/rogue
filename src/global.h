@@ -2,6 +2,7 @@
 #include <stdlib.h>
 #include <math.h>
 #include <ncurses.h>
+#include "AStar.h"
 
 // Map Dimensions
 #define HEIGHT 15
@@ -45,7 +46,9 @@ typedef struct Game Game;
 typedef struct Action Action;
 
 // global variables
-Map* map;
+Map *map;
+Game *game;
+ASPathNodeSource *nodeSource;
 
 // Actor types
 enum actorTypes
@@ -119,8 +122,8 @@ Action *getAction(Actor *actor);
 
 // ActorNode methods
 ActorNode *mkActorNode(Actor *actor);
-void appendActor(Game *game, Actor *actor);
-void removeActor(Game *game, Actor *actor);
+void appendActor(Actor *actor);
+void removeActor(Actor *actor);
 
 // Tile methods
 Tile *mkTile(int type, int x, int y);
@@ -128,13 +131,13 @@ char getAppearance(Tile *tile);
 
 // Display methods
 void initDisplay();
-void render(Map *map, Game *game);
+void render(Map *map);
 
 // game methods
-void run(Game *game);
-void process(Game *game);
-void addActor(Game *game, int type, int x, int y);
-void nextActor(Game *game);
+void run();
+void process();
+void addActor(int type, int x, int y);
+void nextActor();
 
 // map methods
 Map *mkMap();

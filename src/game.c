@@ -1,36 +1,42 @@
 #include "global.h"
 
-void run(Game *game)
+void run()
 {
   srand(time(NULL));
 
   // Generate the map
   map = mkMap();
 
+  // initialize astar
+  nodeSource = malloc(sizeof(ASPathNodeSource));
+  nodeSource->nodeSize = sizeof(Tile);
+  nodeSource->nodeNeighbors = &nodeNeighbors;
+  nodeSource->pathCostHeuristic = &pathCostHeuristic;
+
   // create the hero
-  addActor(game, PLAYER, 20, 5);
-  addActor(game, SLUG, 30, 7);
-  addActor(game, CHEETAH, 33, 7);
-  addActor(game, GOBLIN, 28, 7);
+  addActor(PLAYER, 20, 5);
+
+  // create some monsters
+  addActor(GOBLIN, 28, 7);
 
   // set current actor
   game->currentActorNode = game->actorHead;
 
   initDisplay();
 
-  render(map, game);
+  render(map);
 
   int playing = 1;
 
   while(playing) {
     process(game);
-    render(map, game);
+    render(map);
   }
 
   endwin();
 }
 
-void process(Game *game)
+void process()
 {
   Action *action = getAction(game->currentActorNode->actor);
   performAction(action);
@@ -38,13 +44,13 @@ void process(Game *game)
 }
 
 // adds an actor to the map and the actor linked list
-void addActor(Game *game, int type, int x, int y) {
+void addActor(int type, int x, int y) {
   Actor *actor = map->grid[y][x]->actor = mkActor(type, x, y);
-  appendActor(game, actor);
+  appendActor(actor);
 }
 
 // sets the next actor in the linked list as the current
-void nextActor(Game *game) {
+void nextActor() {
   if(game->currentActorNode->next == NULL) {
     game->currentActorNode = game->actorHead;
     return;

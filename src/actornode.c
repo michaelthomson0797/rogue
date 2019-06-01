@@ -7,7 +7,7 @@ ActorNode *mkActorNode(Actor *actor) {
   return actorNode;
 }
 
-void appendActor(Game *game, Actor *actor) {
+void appendActor(Actor *actor) {
   if(game->actorHead == NULL) {
     game->actorHead = mkActorNode(actor);
     return;
@@ -21,7 +21,7 @@ void appendActor(Game *game, Actor *actor) {
   n->next = mkActorNode(actor);
 }
 
-void removeActor(Game *game, Actor *actor) {
+void removeActor(Actor *actor) {
   ActorNode *n = game->actorHead;
   while(n->next->actor != actor) {
     n = n->next;

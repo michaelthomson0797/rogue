@@ -26,7 +26,7 @@ Actor *mkActor(int type, int x, int y)
     return mkGenericActor(PLAYER, '@', 12, 6, 100, 20, x, y);
   
   case GOBLIN:
-    return mkGenericActor(GOBLIN, 'G', 12, 3, 10, 10, x, y);
+    return mkGenericActor(GOBLIN, 'G', 12, 4, 10, 10, x, y);
 
   case SLUG:
     return mkGenericActor(SLUG, 'S', 12, 2, 50, 10, x, y);
@@ -78,22 +78,19 @@ Action *getAction(Actor *actor) {
   }
 
   if(actor->type != PLAYER) {
+    int sx = actor->x;
+    int sy = actor->y;
+    int tx = game->actorHead->actor->x;
+    int ty = game->actorHead->actor->y;
+    Tile *source = map->grid[sy][sx];
+    Tile *target = map->grid[ty][tx];
+
+
+    ASPath path = ASPathCreate(nodeSource, NULL, source, target);
+
+    Tile *step = (Tile *)ASPathGetNode(path, 1);
     
-    int r = rand() % 4;
-    switch (r)
-    {
-      case 0:
-        return mkAction(WALK, actor, actor->x-1, actor->y);
-      
-      case 1:
-        return mkAction(WALK, actor, actor->x+1, actor->y);
-
-      case 2:
-        return mkAction(WALK, actor, actor->x, actor->y-1);
-
-      case 3:
-        return mkAction(WALK, actor, actor->x, actor->y+1);
-    }
+    return mkAction(WALK, actor, step->x, step->y);
   }
 
   return NULL;

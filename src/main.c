@@ -2,7 +2,7 @@
 
 int main() 
 {
-  Game *game = malloc(sizeof(Game));
+  game = malloc(sizeof(Game));
 
   game->actorHead = NULL;
   game->currentActorNode = NULL;

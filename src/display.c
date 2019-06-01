@@ -10,7 +10,7 @@ void initDisplay() {
 }
 
 // renders a given map to the screen
-void render(Map *map, Game *game) {
+void render(Map *map) {
 
   // prints the map
   for(int y = 0; y < map->height; y++) {
