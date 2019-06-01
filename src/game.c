@@ -2,12 +2,19 @@
 
 void run(Game *game)
 {
+  srand(time(NULL));
+
   // Generate the map
   map = mkMap();
 
   // create the hero
   addActor(game, PLAYER, 20, 5);
   addActor(game, MONSTER, 30, 7);
+  addActor(game, MONSTER, 33, 7);
+  addActor(game, MONSTER, 28, 7);
+  addActor(game, MONSTER, 30, 4);
+  addActor(game, MONSTER, 27, 4);
+  addActor(game, MONSTER, 28, 4);
 
   // set current actor
   game->currentActorNode = game->actorHead;

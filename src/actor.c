@@ -59,7 +59,7 @@ Action *getAction(Actor *actor) {
   }
 
   if(actor->type == MONSTER) {
-    srand(time(NULL));
+    
     int r = rand() % 4;
     switch (r)
     {
