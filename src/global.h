@@ -100,6 +100,14 @@ struct Map
   Tile *grid[HEIGHT][WIDTH];
 };
 
+// Room structure
+struct Room
+{
+  int lx, ly;
+  int rx, ry;
+  int width, height;
+};
+
 // Game Structure
 struct Game
 {
@@ -143,6 +151,10 @@ void nextActor();
 
 // map methods
 Map *mkMap();
+
+// room methods
+Room *mkRoom(int lx, int ly, int rx, int ry, int width, int height);
+int isIntersecting(Room *room1, Room *room2);
 
 // Action methods
 Action *mkAction(int type, Actor *actor, int x, int y);
