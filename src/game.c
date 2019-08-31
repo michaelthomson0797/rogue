@@ -2,8 +2,6 @@
 
 void run()
 {
-  srand(time(NULL));
-
   // Generate the map
   map = mkMap();
 
