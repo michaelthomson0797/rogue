@@ -101,7 +101,11 @@ Action *getAction(Actor *actor) {
     ASPath path = ASPathCreate(nodeSource, NULL, source, target);
 
     Tile *step = (Tile *)ASPathGetNode(path, 1);
-    
+
+    if (step == NULL){
+      return mkAction(WAIT, actor, actor->x, actor->y);
+    }
+
     return mkAction(WALK, actor, step->x, step->y);
   }
 

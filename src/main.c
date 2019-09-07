@@ -2,6 +2,9 @@
 
 int main() 
 {
+  // seed random number
+  srand(time(NULL));
+  
   game = malloc(sizeof(Game));
 
   game->actorHead = NULL;

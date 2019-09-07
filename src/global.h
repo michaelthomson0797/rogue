@@ -1,15 +1,23 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <time.h>
 #include <math.h>
 #include <ncurses.h>
 #include "AStar.h"
 
-// Map Dimensions
+// Map properties
 #define HEIGHT 31
 #define WIDTH 151
+#define ROOMPLACEMENTS 20
 
-#define MAPNAME "testmap2.txt"
+// Room properties
+#define MINROOMWIDTH 5
+#define MAXROOMWIDTH 10
 
+#define MINROOMHEIGHT 3
+#define MAXROOMHEIGHT 6
+
+// cost of action
 #define ENERGYCOST 12
 
 
@@ -46,6 +54,9 @@ typedef struct Tile Tile;
 typedef struct Map Map;
 typedef struct Game Game;
 typedef struct Action Action;
+typedef struct Room Room;
+typedef struct RoomNode RoomNode;
+
 
 // global variables
 Map *map;
@@ -98,6 +109,7 @@ struct Map
   int height;
   int width;
   Tile *grid[HEIGHT][WIDTH];
+  RoomNode *roomHead;
 };
 
 // Room structure
@@ -106,6 +118,12 @@ struct Room
   int lx, ly;
   int rx, ry;
   int width, height;
+};
+
+struct RoomNode
+{
+  Room *room;
+  RoomNode *next;
 };
 
 // Game Structure
@@ -124,8 +142,7 @@ struct Action
   int y;
 };
 
-
-// Method Signatures
+/* Method Signatures */
 // Actor methods
 Actor *mkActor(int type, int x, int y);
 Action *getAction(Actor *actor);
@@ -151,10 +168,17 @@ void nextActor();
 
 // map methods
 Map *mkMap();
+Room *generateRandomRoom();
+int doesRoomFit(Room *roomToCheck, RoomNode *roomHead);
+void placeRoom(Room *room);
 
 // room methods
 Room *mkRoom(int lx, int ly, int rx, int ry, int width, int height);
 int isIntersecting(Room *room1, Room *room2);
+
+// roomnode methods
+RoomNode *mkRoomNode(Room *room);
+void appendRoom(Room *room, RoomNode* roomNode);
 
 // Action methods
 Action *mkAction(int type, Actor *actor, int x, int y);

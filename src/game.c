@@ -12,10 +12,10 @@ void run()
   nodeSource->pathCostHeuristic = &pathCostHeuristic;
 
   // create the hero
-  addActor(PLAYER, 1, 1);
+  addActor(PLAYER, map->roomHead->room->lx+1, map->roomHead->room->ly+1);
 
   // create some monsters
-  addActor(GOBLIN, 149, 29);
+  addActor(GOBLIN, map->roomHead->next->room->lx+1, map->roomHead->next->room->ly+1);
 
   // set current actor
   game->currentActorNode = game->actorHead;
@@ -38,7 +38,7 @@ void process()
 {
   Action *action = getAction(game->currentActorNode->actor);
   performAction(action);
-  nextActor(game);
+  nextActor();
 }
 
 // adds an actor to the map and the actor linked list
