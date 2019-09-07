@@ -29,6 +29,9 @@ Map *mkMap() {
       appendRoom(room, map->roomHead);
     }
   }
+
+  placeTunnels();
+  
   return map;
 }
 
@@ -66,6 +69,55 @@ void placeRoom(Room *room)
       } else {
         map->grid[y][x] = mkTile(FLOOR, x, y);
       }
+    }
+  }
+}
+
+void placeTunnels()
+{
+  // loop through all rooms
+  for(RoomNode *currRoomNode = map->roomHead; currRoomNode->next != NULL; currRoomNode = currRoomNode->next){
+    // get source and target coordinates
+    int sx = getCenterX(currRoomNode->room);
+    int sy = getCenterY(currRoomNode->room);
+    int tx = getCenterX(currRoomNode->next->room);
+    int ty = getCenterY(currRoomNode->next->room);
+
+    // vertical or horizontal first?
+    int VorH = rand()%2;
+
+    if(VorH) {
+      //vertical first
+      placeVerticalTunnel(sy, ty, sx);
+      placeHorizontalTunnel(sx, tx, ty);
+    } else {
+      // horizontal first
+      placeHorizontalTunnel(sx, tx, sy);
+      placeVerticalTunnel(sy, ty, tx);
+    } 
+  }
+}
+
+void placeVerticalTunnel(int sy, int ty, int x) {
+  if (sy < ty) {
+    for(int y = sy; y <= ty; y++) {
+      map->grid[y][x] = mkTile(FLOOR, x, y);
+    }
+  } else {
+    for(int y = ty; y <= sy; y++) {
+      map->grid[y][x] = mkTile(FLOOR, x, y);
+    }
+  }
+}
+
+void placeHorizontalTunnel(int sx, int tx, int y) {
+  if (sx < tx) {
+    for(int x = sx; x <= tx; x++) {
+      map->grid[y][x] = mkTile(FLOOR, x, y);
+    }
+  } else {
+    for(int x = tx; x <= sx; x++) {
+      map->grid[y][x] = mkTile(FLOOR, x, y);
     }
   }
 }

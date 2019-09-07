@@ -22,3 +22,11 @@ int isIntersecting(Room *room1, Room *room2)
 
   return 1;
 }
+
+int getCenterX(Room *room) {
+  return room->lx + (room->width/2);
+}
+
+int getCenterY(Room *room) {
+  return room->ly + (room->height/2);
+}

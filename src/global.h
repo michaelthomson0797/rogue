@@ -6,15 +6,15 @@
 #include "AStar.h"
 
 // Map properties
-#define HEIGHT 31
-#define WIDTH 151
-#define ROOMPLACEMENTS 20
+#define HEIGHT 20
+#define WIDTH 60
+#define ROOMPLACEMENTS 5
 
 // Room properties
 #define MINROOMWIDTH 5
 #define MAXROOMWIDTH 10
 
-#define MINROOMHEIGHT 3
+#define MINROOMHEIGHT 4
 #define MAXROOMHEIGHT 6
 
 // cost of action
@@ -171,10 +171,15 @@ Map *mkMap();
 Room *generateRandomRoom();
 int doesRoomFit(Room *roomToCheck, RoomNode *roomHead);
 void placeRoom(Room *room);
+void placeTunnels();
+void placeHorizontalTunnel(int sx, int tx, int y);
+void placeVerticalTunnel(int sy, int ty, int x);
 
 // room methods
 Room *mkRoom(int lx, int ly, int rx, int ry, int width, int height);
 int isIntersecting(Room *room1, Room *room2);
+int getCenterX(Room *room);
+int getCenterY(Room *room);
 
 // roomnode methods
 RoomNode *mkRoomNode(Room *room);
