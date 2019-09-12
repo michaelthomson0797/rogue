@@ -8,9 +8,15 @@ RoomNode *mkRoomNode(Room *room)
   return roomNode;
 }
 
-void appendRoom(Room *room, RoomNode* roomHead)
+void appendRoom(Room *room)
 {
+  if (map->roomHead == NULL) {
+    map->roomHead = mkRoomNode(room);
+    return;
+  }
+  
   RoomNode *currRoomNode;
-  for(currRoomNode = roomHead; currRoomNode->next != NULL; currRoomNode = currRoomNode->next){}
+
+  for(currRoomNode = map->roomHead; currRoomNode->next != NULL; currRoomNode = currRoomNode->next){}
   currRoomNode->next = mkRoomNode(room);
 }

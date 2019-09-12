@@ -1,26 +1,22 @@
 #include "global.h"
+#include <math.h>
 
-Room *mkRoom(int lx, int ly, int rx, int ry, int width, int height)
+Room *mkRoom(struct Container *c)
 {
   Room *room = malloc(sizeof(Room));
-  room->lx = lx;
-  room->ly = ly;
-  room->rx = rx;
-  room->ry = ry;
-  room->width = width;
-  room->height = height;
-  return room;
-}
+  room->lx = c->x + (rand() % (c->width/3 + 1));
+  room->ly = c->y + (rand() % (c->height/3 + 1));
+  room->width = c->width - (room->lx - c->x);
+  room->height = c->height - (room->ly - c->y);
+  room->width -= (rand() % (room->width/3 + 1));
+  room->height -= (rand() % (room->height/3 + 1));
+  room->rx = room->lx + room->width;
+  room->ry = room->ly + room->height;
 
-int isIntersecting(Room *room1, Room *room2)
-{
-  if (room1->lx > room2->rx || room2->lx > room1->rx)
-    return 0;
+  if(room->lx == getContainerCenterX(c) || room->ly == getContainerCenterY(c))
+    return mkRoom(c);
   
-  if (room1->ly > room2->ry || room2->ly > room1->ry)
-    return 0;
-
-  return 1;
+  return room;
 }
 
 int getCenterX(Room *room) {

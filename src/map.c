@@ -6,7 +6,7 @@ Map *mkMap() {
 
   map->height = HEIGHT;
   map->width = WIDTH;
-
+  map->roomHead = NULL;
 
   //initialize rooms to empty
   for(int y = 0; y < HEIGHT; y++) {
@@ -15,47 +15,18 @@ Map *mkMap() {
     }
   }
 
-  Room *room = generateRandomRoom();
-  map->roomHead = mkRoomNode(room);
-  placeRoom(map->roomHead->room);
+  struct Container *mainContainer = mkContainer(0, 0, WIDTH, HEIGHT);
+  struct BSPNode *tree = splitContainer(mainContainer, BSP_DEPTH);
 
-  for(int i = 0; i < ROOMPLACEMENTS; i++) {
-    // create random room in bounds of map
-    room = generateRandomRoom();
+  placeRooms(tree);
 
-    // see if the room fits
-    if(doesRoomFit(room, map->roomHead)) {
-      placeRoom(room);
-      appendRoom(room, map->roomHead);
-    }
+  placeTunnels(tree);
+
+  if(PRINT_CONTAINERS) {
+    showContainers(tree);
   }
 
-  placeTunnels();
-  
   return map;
-}
-
-Room *generateRandomRoom()
-{
-  int width = (rand() % (MAXROOMWIDTH - MINROOMWIDTH + 1)) + MINROOMWIDTH;
-  int height = (rand() % (MAXROOMHEIGHT - MINROOMHEIGHT + 1)) + MINROOMHEIGHT;
-
-  int lx = (rand() % (WIDTH - width - 0 + 1)) + 0;
-  int ly = (rand() % (HEIGHT - height - 0 + 1)) + 0;
-
-  Room *room = mkRoom(lx, ly, lx+width, ly+height, width, height);
-  return room;
-}
-
-int doesRoomFit(Room *roomToCheck, RoomNode *roomHead)
-{
-  for(RoomNode *currRoomNode = roomHead; currRoomNode != NULL; currRoomNode = currRoomNode->next){
-    if(isIntersecting(roomToCheck, currRoomNode->room)){
-      return 0;
-    }
-  }
-
-  return 1;
 }
 
 void placeRoom(Room *room)
@@ -73,28 +44,25 @@ void placeRoom(Room *room)
   }
 }
 
-void placeTunnels()
+void placeTunnels(struct BSPNode *tree)
 {
-  // loop through all rooms
-  for(RoomNode *currRoomNode = map->roomHead; currRoomNode->next != NULL; currRoomNode = currRoomNode->next){
-    // get source and target coordinates
-    int sx = getCenterX(currRoomNode->room);
-    int sy = getCenterY(currRoomNode->room);
-    int tx = getCenterX(currRoomNode->next->room);
-    int ty = getCenterY(currRoomNode->next->room);
+  if(tree->lNode == NULL || tree->rNode == NULL) {
+    return;
+  }
 
-    // vertical or horizontal first?
-    int VorH = rand()%2;
+  placeTunnels(tree->lNode);
+  placeTunnels(tree->rNode);
+  
+  // get source and target coordinates
+  int sx = getContainerCenterX(tree->lNode->container);
+  int sy = getContainerCenterY(tree->lNode->container);
+  int tx = getContainerCenterX(tree->rNode->container);
+  int ty = getContainerCenterY(tree->rNode->container);
 
-    if(VorH) {
-      //vertical first
-      placeVerticalTunnel(sy, ty, sx);
-      placeHorizontalTunnel(sx, tx, ty);
-    } else {
-      // horizontal first
-      placeHorizontalTunnel(sx, tx, sy);
-      placeVerticalTunnel(sy, ty, tx);
-    } 
+  if(sx == tx) {
+    placeVerticalTunnel(sy, ty, tx);
+  } else {
+    placeHorizontalTunnel(sx, tx, sy);
   }
 }
 
@@ -120,4 +88,36 @@ void placeHorizontalTunnel(int sx, int tx, int y) {
       map->grid[y][x] = mkTile(FLOOR, x, y);
     }
   }
+}
+
+void showContainers(struct BSPNode *tree) {
+  for(int y = tree->container->y; y < tree->container->y + tree->container->height; y++) {
+    for(int x = tree->container->x; x < tree->container->x + tree->container->width; x++) {
+      if (x == tree->container->x || x == tree->container->x + tree->container->width - 1 ||
+          y == tree->container->y || y == tree->container->y + tree->container->height - 1) {
+        map->grid[y][x] = mkTile(WALL, x, y);
+      }
+    }
+  }
+
+  if(tree->lNode != NULL) {
+    showContainers(tree->lNode);
+  }
+
+  if(tree->rNode != NULL) {
+    showContainers(tree->rNode);
+  }
+}
+
+void placeRooms(struct BSPNode *tree) {
+  Room *room = mkRoom(tree->container);
+
+  if(tree->lNode == NULL || tree->rNode == NULL) {
+    placeRoom(room);
+    appendRoom(room);
+    return;
+  }
+
+  placeRooms(tree->lNode);
+  placeRooms(tree->rNode);
 }

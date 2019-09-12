@@ -9,6 +9,12 @@
 #define HEIGHT 20
 #define WIDTH 60
 #define ROOMPLACEMENTS 5
+#define WIDTH_RATIO 0.75
+#define HEIGHT_RATIO 0.25
+#define BSP_DEPTH 3
+
+// debug
+#define PRINT_CONTAINERS 0
 
 // Room properties
 #define MINROOMWIDTH 5
@@ -112,6 +118,22 @@ struct Map
   RoomNode *roomHead;
 };
 
+// BSP structure
+struct BSPNode
+{
+  struct Container *container;
+  struct BSPNode *lNode;
+  struct BSPNode *rNode;
+};
+
+// Container structure
+struct Container
+{
+  int x, y;
+  int width, height;
+};
+
+
 // Room structure
 struct Room
 {
@@ -174,17 +196,26 @@ void placeRoom(Room *room);
 void placeTunnels();
 void placeHorizontalTunnel(int sx, int tx, int y);
 void placeVerticalTunnel(int sy, int ty, int x);
+void showContainers(struct BSPNode *tree);
+void placeRooms(struct BSPNode *tree);
 
 // room methods
-Room *mkRoom(int lx, int ly, int rx, int ry, int width, int height);
+Room *mkRoom(struct Container *c);
 int isIntersecting(Room *room1, Room *room2);
 int getCenterX(Room *room);
 int getCenterY(Room *room);
 
 // roomnode methods
 RoomNode *mkRoomNode(Room *room);
-void appendRoom(Room *room, RoomNode* roomNode);
+void appendRoom(Room *room);
 
 // Action methods
 Action *mkAction(int type, Actor *actor, int x, int y);
 void performAction(Action *action);
+
+// container methods
+struct Container *mkContainer(int x, int y, int width, int height);
+struct BSPNode *mkBSPNode(struct Container *container);
+struct BSPNode *splitContainer(struct Container *container, int iter);
+int getContainerCenterX(struct Container *container);
+int getContainerCenterY(struct Container *container);
