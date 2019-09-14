@@ -38,5 +38,7 @@ Tile *mkTile(int type, int x, int y)
 
 // given a pointer to a tile, this will get the appearance
 char getAppearance(Tile *tile) {
-  return tile->actor == NULL ? tile->appearance : tile->actor->appearance;
+  if(!tile->explored) return ' ';
+  else if(!tile->visible) return tile->appearance;
+  else return tile->actor == NULL ? tile->appearance : tile->actor->appearance;
 }

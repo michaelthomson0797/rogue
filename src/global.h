@@ -198,12 +198,15 @@ void placeHorizontalTunnel(int sx, int tx, int y);
 void placeVerticalTunnel(int sy, int ty, int x);
 void showContainers(struct BSPNode *tree);
 void placeRooms(struct BSPNode *tree);
+void updateVisibility();
+void makeRoomVisible(Room *room);
 
 // room methods
 Room *mkRoom(struct Container *c);
 int isIntersecting(Room *room1, Room *room2);
 int getCenterX(Room *room);
 int getCenterY(Room *room);
+int isInRoom(int x, int y, Room *room);
 
 // roomnode methods
 RoomNode *mkRoomNode(Room *room);

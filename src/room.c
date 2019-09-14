@@ -26,3 +26,10 @@ int getCenterX(Room *room) {
 int getCenterY(Room *room) {
   return room->ly + (room->height/2);
 }
+
+int isInRoom(int x, int y, Room *room) {
+  if(x > room->lx && x < room->rx && y > room->ly && y < room->ry)
+    return 1;
+
+  return 0;
+}

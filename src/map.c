@@ -70,8 +70,7 @@ void placeVerticalTunnel(int sy, int ty, int x) {
   if (sy < ty) {
     for(int y = sy; y <= ty; y++) {
       map->grid[y][x] = mkTile(FLOOR, x, y);
-    }
-  } else {
+    }} else {
     for(int y = ty; y <= sy; y++) {
       map->grid[y][x] = mkTile(FLOOR, x, y);
     }
@@ -120,4 +119,55 @@ void placeRooms(struct BSPNode *tree) {
 
   placeRooms(tree->lNode);
   placeRooms(tree->rNode);
+}
+
+void updateVisibility() {
+  Actor *hero = game->actorHead->actor;
+  int x = hero->x;
+  int y = hero->y;
+
+  //clear visibility
+  for(int y = 0; y < HEIGHT; y++) {
+    for(int x = 0; x < WIDTH; x++) {
+      map->grid[y][x]->visible = 0;
+    }
+  }
+
+  // player can always see one square away in all directions
+  map->grid[y-1][x-1]->visible = 1;
+  map->grid[y-1][x]->visible = 1;
+  map->grid[y-1][x+1]->visible = 1;
+  map->grid[y][x-1]->visible = 1;
+  map->grid[y][x]->visible = 1;
+  map->grid[y][x+1]->visible = 1;
+  map->grid[y+1][x-1]->visible = 1;
+  map->grid[y+1][x]->visible = 1;
+  map->grid[y+1][x-1]->visible = 1;
+
+  //visible tiles become explored
+  map->grid[y-1][x-1]->explored = 1;
+  map->grid[y-1][x]->explored = 1;
+  map->grid[y-1][x+1]->explored = 1;
+  map->grid[y][x-1]->explored = 1;
+  map->grid[y][x]->explored = 1;
+  map->grid[y][x+1]->explored = 1;
+  map->grid[y+1][x-1]->explored = 1;
+  map->grid[y+1][x]->explored = 1;
+  map->grid[y+1][x-1]->explored = 1;
+
+  // player can see entire rooms
+  for(RoomNode *roomNode = map->roomHead; roomNode != NULL; roomNode = roomNode->next) {
+    if(isInRoom(x, y, roomNode->room)) {
+      makeRoomVisible(roomNode->room);
+    }
+  }
+}
+
+void makeRoomVisible(Room *room) {
+  for(int x = room->lx; x < room->rx; x++) {
+    for(int y = room->ly; y < room->ry; y++) {
+      map->grid[y][x]->visible = 1;
+      map->grid[y][x]->explored = 1;
+    }
+  }
 }

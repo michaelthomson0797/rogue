@@ -21,7 +21,7 @@ void run()
   game->currentActorNode = game->actorHead;
 
   initDisplay();
-
+  updateVisibility();
   render(map);
 
   int playing = 1;
@@ -38,6 +38,7 @@ void process()
 {
   Action *action = getAction(game->currentActorNode->actor);
   performAction(action);
+  updateVisibility();
   nextActor();
 }
 
