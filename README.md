@@ -8,7 +8,8 @@ An attempt to create a basic ASCII based roguelike game using C and the ncurses 
 * ~~Create turn based game loop using energy and speed~~
 * ~~Create basic melee combat system~~
 * ~~Implement pathfinding for NPCs~~
-* Create sight system for players and NPCs
+* ~~Create sight system for players and NPCs~~
 * Add items and equipment
-* Procedural map generation using BSP trees
+* ~~Procedural map generation using BSP trees~~
+* Add combat statistics
 * Multiple levels
