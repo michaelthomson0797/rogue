@@ -2,7 +2,10 @@
 
 int main() 
 {
-  Game *game = malloc(sizeof(Game));
+  // seed random number
+  srand(time(NULL));
+  
+  game = malloc(sizeof(Game));
 
   game->actorHead = NULL;
   game->currentActorNode = NULL;

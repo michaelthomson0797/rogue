@@ -1,2 +1,4 @@
 .vscode/
 src/main
+src/valgrind.out
+src/valgrind-out.txt
